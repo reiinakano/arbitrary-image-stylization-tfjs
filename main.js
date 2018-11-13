@@ -41,6 +41,10 @@ class Main {
 
   startStyling() {
     this.styleButton.disabled = true;
+    const bottleneck = this.styleNet.predict(tf.fromPixels(this.styleImg).toFloat().div(tf.scalar(255)).expandDims());
+    const stylized = this.transformNet.predict([tf.fromPixels(this.contentImg).toFloat().div(tf.scalar(255)).expandDims(), bottleneck]);
+    tf.toPixels(stylized.squeeze(), this.styled100);
+    this.styleButton.disabled = false;
   }
 
 }
