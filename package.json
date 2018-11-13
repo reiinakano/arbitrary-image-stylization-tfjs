@@ -1,5 +1,5 @@
 {
-  "name": "arbitrary-fast-style-transfer-tfjs",
+  "name": "arbitrary-image-stylization-tfjs",
   "version": "1.0.0",
   "author": "Reiichiro Nakano <reiichiro.s.nakano@gmail.com>",
   "dependencies": {
