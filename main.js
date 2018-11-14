@@ -21,10 +21,11 @@ class Main {
     };
 
     // Initialize selectors
+    this.fileSelect = document.getElementById('file-select');
     this.contentSelect = document.getElementById('content-select');
-    this.contentSelect.onchange = (evt) => this.setImage(this.contentImg, evt.target.value);
+    this.contentSelect.onclick = (evt) => this.setImage(this.contentImg, evt.target.value);
     this.styleSelect = document.getElementById('style-select');
-    this.styleSelect.onchange = (evt) => this.setImage(this.styleImg, evt.target.value);
+    this.styleSelect.onclick = (evt) => this.setImage(this.styleImg, evt.target.value);
 
     Promise.all([
       tf.loadFrozenModel(
@@ -51,6 +52,16 @@ class Main {
   setImage(element, selectedValue) {
     if (selectedValue === 'file') {
       console.log('file selected');
+      this.fileSelect.onchange = (evt) => {
+        const f = evt.target.files[0];
+        const fileReader = new FileReader();
+        fileReader.onload = ((e) => {
+          element.src = e.target.result;
+        });
+        fileReader.readAsDataURL(f);
+        this.fileSelect.value = '';
+      }
+      this.fileSelect.click();
     } else {
       element.src = 'images/' + selectedValue + '.jpg';
     }
