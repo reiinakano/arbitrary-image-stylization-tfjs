@@ -20,6 +20,11 @@ class Main {
     this.styleImgSlider.oninput = (evt) => {
       this.styleImg.height = evt.target.value;
     }
+    this.styleRatio = 1.0
+    this.styleRatioSlider = document.getElementById('stylized-img-ratio');
+    this.styleRatioSlider.oninput = (evt) => {
+      this.styleRatio = evt.target.value/100.;
+    }
 
     // Initialize buttons
     this.styleButton = document.getElementById('style-button');
@@ -86,9 +91,24 @@ class Main {
     await tf.nextFrame();
     this.styleButton.textContent = 'Generating 100D style representation';
     await tf.nextFrame();
-    const bottleneck = await tf.tidy(() => {
+    let bottleneck = await tf.tidy(() => {
       return this.styleNet.predict(tf.fromPixels(this.styleImg).toFloat().div(tf.scalar(255)).expandDims());
     })
+    if (this.styleRatio !== 1.0) {
+      this.styleButton.textContent = 'Generating 100D identity style representation';
+      await tf.nextFrame();
+      const identityBottleneck = await tf.tidy(() => {
+        return this.styleNet.predict(tf.fromPixels(this.contentImg).toFloat().div(tf.scalar(255)).expandDims());
+      })
+      const styleBottleneck = bottleneck;
+      bottleneck = await tf.tidy(() => {
+        const styleBottleneckScaled = styleBottleneck.mul(tf.scalar(this.styleRatio));
+        const identityBottleneckScaled = identityBottleneck.mul(tf.scalar(1.0-this.styleRatio));
+        return styleBottleneckScaled.addStrict(identityBottleneckScaled)
+      })
+      styleBottleneck.dispose();
+      identityBottleneck.dispose();
+    }
     this.styleButton.textContent = 'Stylizing image...';
     await tf.nextFrame();
     const stylized = await tf.tidy(() => {
