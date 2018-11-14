@@ -20,6 +20,12 @@ class Main {
       });
     };
 
+    // Initialize selectors
+    this.contentSelect = document.getElementById('content-select');
+    this.contentSelect.onchange = (evt) => this.setImage(this.contentImg, evt.target.value);
+    this.styleSelect = document.getElementById('style-select');
+    this.styleSelect.onchange = (evt) => this.setImage(this.styleImg, evt.target.value);
+
     Promise.all([
       tf.loadFrozenModel(
         'saved_model_style_js/tensorflowjs_model.pb', 
@@ -31,14 +37,23 @@ class Main {
       // Warmup the model. This isn't necessary, but makes the first prediction
       // faster.
       tf.tidy(() => {
-        const bottleneck = styleNet.predict(tf.zeros([1, 255, 255, 3]));
-        transformNet.predict([tf.zeros([1, 255, 255, 3]), bottleneck]);
+        const bottleneck = styleNet.predict(tf.zeros([1, 10, 10, 3]));
+        transformNet.predict([tf.zeros([1, 10, 10, 3]), bottleneck]);
       })
       console.log('Loaded styleNet');  
       this.styleNet = styleNet;
       this.transformNet = transformNet;
       this.netsLoaded()
     });
+  }
+
+  // Helper function for setting an image
+  setImage(element, selectedValue) {
+    if (selectedValue === 'file') {
+      console.log('file selected');
+    } else {
+      element.src = 'images/' + selectedValue + '.jpg';
+    }
   }
 
   netsLoaded() {

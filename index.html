@@ -8,11 +8,30 @@
     <script src="dist/bundle.js"></script>
 </head>
 <body>
+<input type="file" id="content-file-select" style="display: none" accept="image/x-png,image/gif,image/jpeg"/>
+<input type="file" id="style-file-select" style="display: none" accept="image/x-png,image/gif,image/jpeg"/>
 <div>
-    <img id="content-img" crossorigin="anonymous" src="https://reiinakano.github.io/fast-style-transfer-deeplearnjs/images/diana.jpg" height=255></img>
+    <img id="content-img" src="images/stata.jpg" height=255></img>
+    <select id="content-select">
+      <option value="file">Select from file</option>
+      <option value="stata" selected="selected">stata</option>
+      <option value="diana">diana</option>
+      <option value="face">face</option>
+      <option value="golden_gate">golden_gate</option>
+      <option value="beach">beach</option>
+    </select>
 </div>
 <div>
-    <img id="style-img" crossorigin="anonymous" src="https://reiinakano.github.io/fast-style-transfer-deeplearnjs/images/udnie.jpg" height=255></img>
+    <img id="style-img" src="images/udnie.jpg" height=255></img>
+    <select id="style-select" >
+      <option value="file">Select from file</option>
+      <option value="udnie" selected="selected">udnie</option>
+      <option value="scream">scream</option>
+      <option value="la_muse">la_muse</option>
+      <option value="clouds">clouds</option>
+      <option value="towers">towers</option>
+      <option value="sketch">sketch</option>
+    </select>
 </div>
 <div>
     <canvas id="stylized"></canvas>
