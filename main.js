@@ -11,6 +11,16 @@ class Main {
     this.styleImg = document.getElementById('style-img');
     this.stylized = document.getElementById('stylized');
 
+    // Initialize images
+    this.contentImgSlider = document.getElementById('content-img-size');
+    this.contentImgSlider.oninput = (evt) => {
+      this.contentImg.height = evt.target.value;
+    }
+    this.styleImgSlider = document.getElementById('style-img-size');
+    this.styleImgSlider.oninput = (evt) => {
+      this.styleImg.height = evt.target.value;
+    }
+
     // Initialize buttons
     this.styleButton = document.getElementById('style-button');
     this.styleButton.onclick = () => {
@@ -93,3 +103,11 @@ class Main {
 }
 
 window.addEventListener('load', () => new Main());
+window.addEventListener("dragover",function(e){
+  e = e || event;
+  e.preventDefault();
+},false);
+window.addEventListener("drop",function(e){
+  e = e || event;
+  e.preventDefault();
+},false);
