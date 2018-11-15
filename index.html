@@ -18,15 +18,68 @@
 
 <body>
 <input type="file" id="file-select" style="display: none" accept="image/x-png,image/gif,image/jpeg"/>
-
-<div class="container">
-  <div class="row mb-4">
-    <div class="col">
-        <img id="content-img" class="centered" src="images/stata.jpg" height=255></img>
-        <br>
-        <input type="range" min="255" max="400" value="255" class="slider centered" id="content-img-size">
-        <br>
-        <select id="content-select" class="centered">
+<ul class="nav nav-tabs nav-fill mb-4" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="stylize-tab" data-toggle="tab" href="#stylize" role="tab" aria-controls="stylize" aria-selected="true">Stylize an image</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="combine-tab" data-toggle="tab" href="#combine" role="tab" aria-controls="combine" aria-selected="false">Combine two styles</a>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="stylize" role="tabpanel" aria-labelledby="stylize-tab">
+      <div class="container">
+        <div class="row mb-4">
+          <div class="col">
+              <img id="content-img" class="centered" src="images/stata.jpg" height=255></img>
+              <br>
+              <input type="range" min="255" max="400" value="255" class="slider centered" id="content-img-size">
+              <br>
+              <select id="content-select" class="centered">
+                <option value="file">Select from file</option>
+                <option value="stata" selected="selected">stata</option>
+                <option value="diana">diana</option>
+                <option value="face">face</option>
+                <option value="golden_gate">golden_gate</option>
+                <option value="beach">beach</option>
+              </select>
+          </div>
+          <div class="col">
+              <img id="style-img" class="centered" src="images/udnie.jpg" height=255></img>
+              <br>
+              <input type="range" min="100" max="400" value="255" class="slider centered" id="style-img-size">
+              <br>
+              <select id="style-select" class="centered">
+                <option value="file">Select from file</option>
+                <option value="udnie" selected="selected">udnie</option>
+                <option value="stripes">stripes</option>
+                <option value="bricks">bricks</option>
+                <option value="trees">trees</option>
+                <option value="clouds">clouds</option>
+                <option value="towers">towers</option>
+                <option value="sketch">sketch</option>
+              </select>
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col">
+            <canvas id="stylized" class="centered"></canvas>
+            <br>
+            <input type="range" min="0" max="100" value="100" class="slider centered" id="stylized-img-ratio">
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col">
+            <button disabled id="style-button" class="centered">Loading stylization model. Please wait..</button>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div class="tab-pane fade" id="combine" role="tabpanel" aria-labelledby="combine-tab">
+    <div>
+        <img id="c-content-img" src="images/stata.jpg" height=255></img>
+        <input type="range" min="255" max="400" value="255" class="slider" id="c-content-img-size">
+        <select id="c-content-select">
           <option value="file">Select from file</option>
           <option value="stata" selected="selected">stata</option>
           <option value="diana">diana</option>
@@ -35,15 +88,13 @@
           <option value="beach">beach</option>
         </select>
     </div>
-    <div class="col">
-        <img id="style-img" class="centered" src="images/udnie.jpg" height=255></img>
-        <br>
-        <input type="range" min="100" max="400" value="255" class="slider centered" id="style-img-size">
-        <br>
-        <select id="style-select" class="centered">
+    <div>
+        <img id="c-style-img-1" src="images/stripes.jpg" height=255></img>
+        <input type="range" min="100" max="400" value="255" class="slider" id="c-style-img-1-size">
+        <select id="c-style-1-select" >
           <option value="file">Select from file</option>
-          <option value="udnie" selected="selected">udnie</option>
-          <option value="stripes">stripes</option>
+          <option value="udnie">udnie</option>
+          <option value="stripes" selected="selected">stripes</option>
           <option value="bricks">bricks</option>
           <option value="trees">trees</option>
           <option value="clouds">clouds</option>
@@ -51,70 +102,30 @@
           <option value="sketch">sketch</option>
         </select>
     </div>
-  </div>
-  <div class="row mb-4">
-    <div class="col">
-      <canvas id="stylized" class="centered"></canvas>
-      <br>
-      <input type="range" min="0" max="100" value="100" class="slider centered" id="stylized-img-ratio">
+    <div>
+        <img id="c-style-img-2" src="images/bricks.jpg" height=255></img>
+        <input type="range" min="100" max="400" value="255" class="slider" id="c-style-img-2-size">
+        <select id="c-style-2-select" >
+          <option value="file">Select from file</option>
+          <option value="udnie">udnie</option>
+          <option value="stripes">stripes</option>
+          <option value="bricks" selected="selected">bricks</option>
+          <option value="trees">trees</option>
+          <option value="clouds">clouds</option>
+          <option value="towers">towers</option>
+          <option value="sketch">sketch</option>
+        </select>
     </div>
-  </div>
-  <div class="row mb-4">
-    <div class="col">
-      <button disabled id="style-button" class="centered">Loading stylization model. Please wait..</button>
+    <div>
+        <canvas id="c-stylized"></canvas>
+        <input type="range" min="0" max="100" value="50" class="slider" id="c-stylized-img-ratio">
+    </div>
+    <div>
+        <button disabled id="combine-button">Loading stylization model. Please wait..</button>
     </div>
   </div>
 </div>
 
-<div>
-  <div>
-      <img id="c-content-img" src="images/stata.jpg" height=255></img>
-      <input type="range" min="255" max="400" value="255" class="slider" id="c-content-img-size">
-      <select id="c-content-select">
-        <option value="file">Select from file</option>
-        <option value="stata" selected="selected">stata</option>
-        <option value="diana">diana</option>
-        <option value="face">face</option>
-        <option value="golden_gate">golden_gate</option>
-        <option value="beach">beach</option>
-      </select>
-  </div>
-  <div>
-      <img id="c-style-img-1" src="images/stripes.jpg" height=255></img>
-      <input type="range" min="100" max="400" value="255" class="slider" id="c-style-img-1-size">
-      <select id="c-style-1-select" >
-        <option value="file">Select from file</option>
-        <option value="udnie">udnie</option>
-        <option value="stripes" selected="selected">stripes</option>
-        <option value="bricks">bricks</option>
-        <option value="trees">trees</option>
-        <option value="clouds">clouds</option>
-        <option value="towers">towers</option>
-        <option value="sketch">sketch</option>
-      </select>
-  </div>
-  <div>
-      <img id="c-style-img-2" src="images/bricks.jpg" height=255></img>
-      <input type="range" min="100" max="400" value="255" class="slider" id="c-style-img-2-size">
-      <select id="c-style-2-select" >
-        <option value="file">Select from file</option>
-        <option value="udnie">udnie</option>
-        <option value="stripes">stripes</option>
-        <option value="bricks" selected="selected">bricks</option>
-        <option value="trees">trees</option>
-        <option value="clouds">clouds</option>
-        <option value="towers">towers</option>
-        <option value="sketch">sketch</option>
-      </select>
-  </div>
-  <div>
-      <canvas id="c-stylized"></canvas>
-      <input type="range" min="0" max="100" value="50" class="slider" id="c-stylized-img-ratio">
-  </div>
-  <div>
-      <button disabled id="combine-button">Loading stylization model. Please wait..</button>
-  </div>
-</div>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
