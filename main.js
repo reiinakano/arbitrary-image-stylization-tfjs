@@ -6,6 +6,7 @@ import * as tf from '@tensorflow/tfjs';
  */
 class Main {
   constructor() {
+    this.fileSelect = document.getElementById('file-select');
     this.initializeStyleTransfer();
     this.initializeCombineStyles();
 
@@ -58,7 +59,6 @@ class Main {
     };
 
     // Initialize selectors
-    this.fileSelect = document.getElementById('file-select');
     this.contentSelect = document.getElementById('content-select');
     this.contentSelect.onclick = (evt) => this.setImage(this.contentImg, evt.target.value);
     this.styleSelect = document.getElementById('style-select');
@@ -96,11 +96,12 @@ class Main {
     };
 
     // Initialize selectors
-    this.fileSelect = document.getElementById('file-select');
-    this.contentSelect = document.getElementById('content-select');
-    this.contentSelect.onclick = (evt) => this.setImage(this.contentImg, evt.target.value);
-    this.styleSelect = document.getElementById('style-select');
-    this.styleSelect.onclick = (evt) => this.setImage(this.styleImg, evt.target.value);
+    this.combContentSelect = document.getElementById('c-content-select');
+    this.combContentSelect.onclick = (evt) => this.setImage(this.combContentImg, evt.target.value);
+    this.combStyle1Select = document.getElementById('c-style-1-select');
+    this.combStyle1Select.onclick = (evt) => this.setImage(this.combStyleImg1, evt.target.value);
+    this.combStyle2Select = document.getElementById('c-style-2-select');
+    this.combStyle2Select.onclick = (evt) => this.setImage(this.combStyleImg2, evt.target.value);
   }
 
   connectImageAndSizeSlider(img, slider) {
@@ -186,15 +187,14 @@ class Main {
       return this.styleNet.predict(tf.fromPixels(this.combStyleImg2).toFloat().div(tf.scalar(255)).expandDims());
     });
 
-    this.styleButton.textContent = 'Stylizing image...';
+    this.combineButton.textContent = 'Stylizing image...';
     await tf.nextFrame();
     const combinedBottleneck = await tf.tidy(() => {
       const scaledBottleneck1 = bottleneck1.mul(tf.scalar(1-this.combStyleRatio));
       const scaledBottleneck2 = bottleneck2.mul(tf.scalar(this.combStyleRatio));
       return scaledBottleneck1.addStrict(scaledBottleneck2);
     });
-    
-    await tf.nextFrame();
+
     const stylized = await tf.tidy(() => {
       return this.transformNet.predict([tf.fromPixels(this.combContentImg).toFloat().div(tf.scalar(255)).expandDims(), combinedBottleneck]).squeeze();
     })
@@ -203,7 +203,6 @@ class Main {
     bottleneck2.dispose();
     combinedBottleneck.dispose();
     stylized.dispose();
-    console.log(tf.memory());
   }
 
 }
