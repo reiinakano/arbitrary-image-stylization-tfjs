@@ -2,47 +2,67 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Arbitrary Image Stylization in the Browser</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="dist/bundle.js"></script>
 </head>
+
+<style>
+.centered {
+  margin: auto;    
+  display: block;
+}
+</style>
+
 <body>
 <input type="file" id="file-select" style="display: none" accept="image/x-png,image/gif,image/jpeg"/>
 
-<div hidden>
-  <div>
-      <img id="content-img" src="images/stata.jpg" height=255></img>
-      <input type="range" min="255" max="400" value="255" class="slider" id="content-img-size">
-      <select id="content-select">
-        <option value="file">Select from file</option>
-        <option value="stata" selected="selected">stata</option>
-        <option value="diana">diana</option>
-        <option value="face">face</option>
-        <option value="golden_gate">golden_gate</option>
-        <option value="beach">beach</option>
-      </select>
+<div class="container">
+  <div class="row mb-4">
+    <div class="col">
+        <img id="content-img" class="centered" src="images/stata.jpg" height=255></img>
+        <br>
+        <input type="range" min="255" max="400" value="255" class="slider centered" id="content-img-size">
+        <br>
+        <select id="content-select" class="centered">
+          <option value="file">Select from file</option>
+          <option value="stata" selected="selected">stata</option>
+          <option value="diana">diana</option>
+          <option value="face">face</option>
+          <option value="golden_gate">golden_gate</option>
+          <option value="beach">beach</option>
+        </select>
+    </div>
+    <div class="col">
+        <img id="style-img" class="centered" src="images/udnie.jpg" height=255></img>
+        <br>
+        <input type="range" min="100" max="400" value="255" class="slider centered" id="style-img-size">
+        <br>
+        <select id="style-select" class="centered">
+          <option value="file">Select from file</option>
+          <option value="udnie" selected="selected">udnie</option>
+          <option value="stripes">stripes</option>
+          <option value="bricks">bricks</option>
+          <option value="trees">trees</option>
+          <option value="clouds">clouds</option>
+          <option value="towers">towers</option>
+          <option value="sketch">sketch</option>
+        </select>
+    </div>
   </div>
-  <div>
-      <img id="style-img" src="images/udnie.jpg" height=255></img>
-      <input type="range" min="100" max="400" value="255" class="slider" id="style-img-size">
-      <select id="style-select" >
-        <option value="file">Select from file</option>
-        <option value="udnie" selected="selected">udnie</option>
-        <option value="stripes">stripes</option>
-        <option value="bricks">bricks</option>
-        <option value="trees">trees</option>
-        <option value="clouds">clouds</option>
-        <option value="towers">towers</option>
-        <option value="sketch">sketch</option>
-      </select>
+  <div class="row mb-4">
+    <div class="col">
+      <canvas id="stylized" class="centered"></canvas>
+      <br>
+      <input type="range" min="0" max="100" value="100" class="slider centered" id="stylized-img-ratio">
+    </div>
   </div>
-  <div>
-      <canvas id="stylized"></canvas>
-      <input type="range" min="0" max="100" value="100" class="slider" id="stylized-img-ratio">
-  </div>
-  <div>
-      <button disabled id="style-button">Loading stylization model. Please wait..</button>
+  <div class="row mb-4">
+    <div class="col">
+      <button disabled id="style-button" class="centered">Loading stylization model. Please wait..</button>
+    </div>
   </div>
 </div>
 
@@ -95,5 +115,8 @@
       <button disabled id="combine-button">Loading stylization model. Please wait..</button>
   </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
