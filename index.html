@@ -232,6 +232,24 @@
   <div class="row pt-5">
     <div class="col-md-4 offset-md-4">
         <h5>
+          Are you using the same model as the original paper?
+        </h5>
+        <p>
+          No. The original paper uses an Inception-v3 model 
+          as the style network (~96.2MB as a .tar.gz), which is too 
+          large to be deployed in a browser setting.
+        </p>
+        <p>
+          Before porting this to the browser, a MobileNet-v2 was
+          used to distill the knowledge from a pretrained Inception-v3 
+          style network. This resulted in a size reduction over 10x,
+          from ~96.2MB to ~9.6MB.
+        </p>
+    </div>
+  </div>
+  <div class="row pt-5">
+    <div class="col-md-4 offset-md-4">
+        <h5>
           How does style combination work?
         </h5>
         <p>
@@ -251,31 +269,58 @@
   <div class="row pt-5">
     <div class="col-md-4 offset-md-4">
         <h5>
-          How does style combination work?
+          Is the code open source?
         </h5>
         <p>
-          Since each style can be mapped to a 100-dimensional 
-          style vector by the style network,
-          we simply take a weighted average of the two to get
-          a new style vector for the transformer network.
-        </p>
-        <p>
-          This is also how we are able to control the strength
-          of stylization for a single style. We take a weighted 
-          average of the style vectors of <i>both</i> content 
-          and style images and use it as input to the transformer
-          network.
+            Yup! The code is <a href="https://github.com/reiinakano/arbitrary-image-stylization-tfjs">hosted on Github</a>.
         </p>
     </div>
   </div>
   <div class="row pt-5">
     <div class="col-md-4 offset-md-4">
         <h5>
-          Is the code open source?
+          Plans for future work?
         </h5>
         <p>
-            Yup! The code is <a href="https://github.com/reiinakano/arbitrary-image-stylization-tfjs">hosted on Github</a>.
+          I'd love to collaborate with people interested in making a suite of 
+          tools for artistically manipulating images, kind of like 
+          <a href="https://magenta.tensorflow.org/studio">Magenta Studio</a>
+          but for images. Please reach out if you're planning to build/are 
+          building one out!
         </p>
+    </div>
+  </div>
+  <div class="row pt-5">
+    <div class="col-md-4 offset-md-4">
+        <h5>
+          Credits
+        </h5>
+        <p>
+          This demo was put together by <a href="https://github.com/reiinakano">Reiichiro Nakano</a>
+          but could not have been done without the following:
+        </p>
+        <ul>
+          <li>
+            Authors of the
+            <a href="https://arxiv.org/abs/1705.06830">arbitrary image stylization</a> paper.
+          </li>
+          <li>
+            The Magenta repository for <a href="https://github.com/tensorflow/magenta/tree/master/magenta/models/arbitrary_image_stylization">arbitrary image stylization</a>.
+          </li>
+          <li>
+            Authors of <a href="https://arxiv.org/abs/1801.04381">the MobileNet-v2 paper</a>.
+          </li>
+          <li>
+            Authors of the paper describing <a href="https://arxiv.org/abs/1503.02531">neural network knowledge distillation</a>.
+          </li>
+          <li>
+            The <a href="https://js.tensorflow.org">TensorFlow.js library</a>.
+          </li>
+          <li>
+            <a href="https://colab.research.google.com/">Google Colaboratory</a>, 
+            with which I was able to do all necessary training using a free(!) GPU.
+          </li>
+        </ul>
     </div>
   </div>
 </div>
