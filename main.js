@@ -18,12 +18,6 @@ class Main {
         'saved_model_transformer_js/tensorflowjs_model.pb', 
         'saved_model_transformer_js/weights_manifest.json'),
     ]).then(([styleNet, transformNet]) => {
-      // Warmup the model. This isn't necessary, but makes the first prediction
-      // faster.
-      tf.tidy(() => {
-        const bottleneck = styleNet.predict(tf.zeros([1, 10, 10, 3]));
-        transformNet.predict([tf.zeros([1, 10, 10, 3]), bottleneck]);
-      })
       console.log('Loaded styleNet');  
       this.styleNet = styleNet;
       this.transformNet = transformNet;
