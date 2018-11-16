@@ -2,98 +2,341 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Arbitrary Image Stylization in the Browser</title>
-    <script src="dist/bundle.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+<script src="dist/bundle.js"></script>
 </head>
+
+<style>
+.centered {
+  margin: auto;    
+  display: block;
+}
+</style>
+
 <body>
 <input type="file" id="file-select" style="display: none" accept="image/x-png,image/gif,image/jpeg"/>
-
-<div hidden>
-  <div>
-      <img id="content-img" src="images/stata.jpg" height=255></img>
-      <input type="range" min="255" max="400" value="255" class="slider" id="content-img-size">
-      <select id="content-select">
-        <option value="file">Select from file</option>
-        <option value="stata" selected="selected">stata</option>
-        <option value="diana">diana</option>
-        <option value="face">face</option>
-        <option value="golden_gate">golden_gate</option>
-        <option value="beach">beach</option>
-      </select>
+<!-- As a heading -->
+<div class="jumbotron jumbotron-fluid py-4" style="text-align: center; background-color: #f5f5f5;">
+    <div class="container">
+      <h4>Arbitrary Image Stylization in the Browser</h1>
+    </div>
   </div>
-  <div>
-      <img id="style-img" src="images/udnie.jpg" height=255></img>
-      <input type="range" min="100" max="400" value="255" class="slider" id="style-img-size">
-      <select id="style-select" >
-        <option value="file">Select from file</option>
-        <option value="udnie" selected="selected">udnie</option>
-        <option value="stripes">stripes</option>
-        <option value="bricks">bricks</option>
-        <option value="trees">trees</option>
-        <option value="clouds">clouds</option>
-        <option value="towers">towers</option>
-        <option value="sketch">sketch</option>
-      </select>
+<div class="">
+<ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="stylize-tab" data-toggle="tab" href="#stylize" role="tab" aria-controls="stylize" aria-selected="true">Stylize an image</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="combine-tab" data-toggle="tab" href="#combine" role="tab" aria-controls="combine" aria-selected="false">Combine two styles</a>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="stylize" role="tabpanel" aria-labelledby="stylize-tab">
+      <div class="container">
+        <div class="row my-4">
+          <div class="col mx-5 my-4">
+              <img id="content-img" class="centered" src="images/stata.jpg" height=255></img>
+              <br>
+              <label for="content-img-size">Content image size</label>
+              <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" 
+              title="A bigger content image results in a more detailed output, but increases the processing time significantly."></i>
+              <input type="range" min="255" max="400" value="255" class="custom-range centered" id="content-img-size" >
+              <br>
+              <select id="content-select" class="centered custom-select">
+                <option value="file">Select from file</option>
+                <option value="stata" selected="selected">stata</option>
+                <option value="diana">diana</option>
+                <option value="face">face</option>
+                <option value="golden_gate">golden_gate</option>
+                <option value="beach">beach</option>
+              </select>
+          </div>
+          <div class="col mx-5 my-4">
+              <img id="style-img" class="centered" src="images/udnie.jpg" height=255></img>
+              <br>
+              <label for="style-img-size">Style image size</label>
+              <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" 
+              title='Changing the size of a style image usually affects the texture "seen" by the network.'></i>
+              <input type="range" min="100" max="400" value="255" class="custom-range centered" id="style-img-size">
+              <br>
+              <select id="style-select" class="centered custom-select">
+                <option value="file">Select from file</option>
+                <option value="udnie" selected="selected">udnie</option>
+                <option value="stripes">stripes</option>
+                <option value="bricks">bricks</option>
+                <option value="trees">trees</option>
+                <option value="clouds">clouds</option>
+                <option value="towers">towers</option>
+                <option value="sketch">sketch</option>
+              </select>
+          </div>
+        </div>
+        <div class="row my-4">
+          <div class="col-md-4 offset-md-4">
+            <canvas id="stylized" class="centered"></canvas>
+            <br>
+            <label for="stylized-img-ratio">Stylization strength</label>
+            <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" 
+            title="This parameter affects the stylization strength. The further to the right, the stronger the stylization. This is done via interpolation between the style vectors of the content and style images."></i>
+            <input type="range" min="0" max="100" value="100" class="custom-range centered" id="stylized-img-ratio">
+          </div>
+        </div>
+        <div class="row my-4">
+          <div class="col">
+            <button disabled id="style-button" type="button" class="btn btn-primary centered">Loading stylization model. Please wait..</button>
+          </div>
+        </div>
+      </div>
   </div>
-  <div>
-      <canvas id="stylized"></canvas>
-      <input type="range" min="0" max="100" value="100" class="slider" id="stylized-img-ratio">
-  </div>
-  <div>
-      <button disabled id="style-button">Loading stylization model. Please wait..</button>
+  <div class="tab-pane fade" id="combine" role="tabpanel" aria-labelledby="combine-tab">
+    <div class="container">
+      <div class="row my-4">
+        <div class="col mx-5 my-4">
+            <img id="c-style-img-1" class="centered" src="images/stripes.jpg" height=255></img>
+            <br>
+            <label for="c-style-img-1-size">Style A Size</label>
+            <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" 
+            title="Changing the size of a style image usually affects the texture "seen" by the network."></i>
+            <input type="range" min="100" max="400" value="255" class="custom-range centered" id="c-style-img-1-size">
+            <br>
+            <select id="c-style-1-select" class="centered custom-select">
+              <option value="file">Select from file</option>
+              <option value="udnie">udnie</option>
+              <option value="stripes" selected="selected">stripes</option>
+              <option value="bricks">bricks</option>
+              <option value="trees">trees</option>
+              <option value="clouds">clouds</option>
+              <option value="towers">towers</option>
+              <option value="sketch">sketch</option>
+            </select>
+        </div>
+        <div class="col mx-5 my-4">
+            <img id="c-style-img-2" class="centered" src="images/bricks.jpg" height=255></img>
+            <br>
+            <label for="c-style-img-2-size">Style B Size</label>
+            <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" 
+            title="Changing the size of a style image usually affects the texture "seen" by the network."></i>
+            <input type="range" min="100" max="400" value="255" class="custom-range centered" id="c-style-img-2-size">
+            <br>
+            <select id="c-style-2-select" class="centered custom-select">
+              <option value="file">Select from file</option>
+              <option value="udnie">udnie</option>
+              <option value="stripes">stripes</option>
+              <option value="bricks" selected="selected">bricks</option>
+              <option value="trees">trees</option>
+              <option value="clouds">clouds</option>
+              <option value="towers">towers</option>
+              <option value="sketch">sketch</option>
+            </select>
+        </div>
+      </div>
+      <div class="row my-4">
+        <div class="col-md-4 offset-md-4">
+            <img id="c-content-img" class="centered" src="images/stata.jpg" height=255></img>
+            <br>
+            <label for="c-content-img-size">Content image size</label>
+            <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" 
+            title="A bigger content image results in a more detailed output, but increases the processing time significantly."></i>
+            <input type="range" min="255" max="400" value="255" class="custom-range centered" id="c-content-img-size">
+            <br>
+            <select id="c-content-select" class="centered custom-select">
+              <option value="file">Select from file</option>
+              <option value="stata" selected="selected">stata</option>
+              <option value="diana">diana</option>
+              <option value="face">face</option>
+              <option value="golden_gate">golden_gate</option>
+              <option value="beach">beach</option>
+            </select>
+        </div>
+      </div>
+      <div class="row my-4">
+        <div class="col-md-4 offset-md-4">
+            <canvas id="c-stylized" class="centered"></canvas>
+            <br>
+            <label for="c-stylized-img-ratio">Stylization Ratio</label>
+            <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" 
+            title="This parameter affects the strength of the two styles relative to each other. This is done via interpolation between the style vectors of the two style images."></i>
+            <input type="range" min="0" max="100" value="50" class="custom-range centered" id="c-stylized-img-ratio">
+        </div>
+      </div>
+      <div class="row my-4">
+        <div class="col">
+            <button disabled id="combine-button" type="button" class="btn btn-primary centered">Loading stylization model. Please wait..</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-
-<div>
-  <div>
-      <img id="c-content-img" src="images/stata.jpg" height=255></img>
-      <input type="range" min="255" max="400" value="255" class="slider" id="c-content-img-size">
-      <select id="c-content-select">
-        <option value="file">Select from file</option>
-        <option value="stata" selected="selected">stata</option>
-        <option value="diana">diana</option>
-        <option value="face">face</option>
-        <option value="golden_gate">golden_gate</option>
-        <option value="beach">beach</option>
-      </select>
+<div class="container-fluid pt-5" style="background-color: #f5f5f5;">
+  <div class="row pt-5">
+    <div class="col-md-4 offset-md-4">
+        <h5>
+          What is this?
+        </h5>
+        <p>
+          This is an implementation of an arbitrary image stylization algorithm
+          running purely in the browser using TensorFlow.js. As with all neural 
+          style transfer algorithms, a neural network attempts to "draw" one 
+          picture, the Content (usually a photograph), in the style of another, 
+          the Style (usually a painting). 
+        </p>
+        <p>
+          Although other browser implementations of style transfer exist,
+          they are normally limited to a pre-selected handful of styles, due to
+          the requirement that a separate neural network must be trained for each
+          style image.
+        </p>
+        <p>
+          Arbitrary image stylization works around this limitation by using a
+          separate <i>style network</i> that learns to break down each image into 
+          a 100-dimensional vector representing its style. This style vector is 
+          then fed into another network, the <i>transformer network</i>, along
+          with the content image, to produce the final stylized image.
+        </p>
+    </div>
   </div>
-  <div>
-      <img id="c-style-img-1" src="images/stripes.jpg" height=255></img>
-      <input type="range" min="100" max="400" value="255" class="slider" id="c-style-img-1-size">
-      <select id="c-style-1-select" >
-        <option value="file">Select from file</option>
-        <option value="udnie">udnie</option>
-        <option value="stripes" selected="selected">stripes</option>
-        <option value="bricks">bricks</option>
-        <option value="trees">trees</option>
-        <option value="clouds">clouds</option>
-        <option value="towers">towers</option>
-        <option value="sketch">sketch</option>
-      </select>
+  <div class="row pt-5">
+    <div class="col-md-4 offset-md-4">
+        <h5>
+          Is my data safe? Can you see my pictures?
+        </h5>
+        <p>
+          Your data and pictures here never leave your computer! In fact,
+          this is one of the main advantages of running neural networks 
+          in your browser. Instead of sending us your data, we send *you* 
+          both the model *and* the code to run the model. These are then 
+          run by your browser.
+        </p>
+    </div>
   </div>
-  <div>
-      <img id="c-style-img-2" src="images/bricks.jpg" height=255></img>
-      <input type="range" min="100" max="400" value="255" class="slider" id="c-style-img-2-size">
-      <select id="c-style-2-select" >
-        <option value="file">Select from file</option>
-        <option value="udnie">udnie</option>
-        <option value="stripes">stripes</option>
-        <option value="bricks" selected="selected">bricks</option>
-        <option value="trees">trees</option>
-        <option value="clouds">clouds</option>
-        <option value="towers">towers</option>
-        <option value="sketch">sketch</option>
-      </select>
+  <div class="row pt-5">
+    <div class="col-md-4 offset-md-4">
+        <h5>
+          How big are the models I'm downloading?
+        </h5>
+        <p>
+          The style network is ~9.6MB, while the transformer network is ~7.9MB,
+          for a total of ~17.5MB. Since these models work for any style, you only 
+          have to download them once!
+        </p>
+    </div>
   </div>
-  <div>
-      <canvas id="c-stylized"></canvas>
-      <input type="range" min="0" max="100" value="50" class="slider" id="c-stylized-img-ratio">
+  <div class="row pt-5">
+    <div class="col-md-4 offset-md-4">
+        <h5>
+          Are you using the same model as the original paper?
+        </h5>
+        <p>
+          No. The original paper uses an Inception-v3 model 
+          as the style network (~96.2MB as a .tar.gz), which is too 
+          large to be deployed in a browser setting.
+        </p>
+        <p>
+          Before porting this to the browser, a MobileNet-v2 was
+          used to distill the knowledge from a pretrained Inception-v3 
+          style network. This resulted in a size reduction over 10x,
+          from ~96.2MB to ~9.6MB.
+        </p>
+    </div>
   </div>
-  <div>
-      <button disabled id="combine-button">Loading stylization model. Please wait..</button>
+  <div class="row pt-5">
+    <div class="col-md-4 offset-md-4">
+        <h5>
+          How does style combination work?
+        </h5>
+        <p>
+          Since each style can be mapped to a 100-dimensional 
+          style vector by the style network,
+          we simply take a weighted average of the two to get
+          a new style vector for the transformer network.
+        </p>
+        <p>
+          This is also how we are able to control the strength
+          of stylization. We take a weighted average of the style 
+          vectors of <i>both</i> content and style images and use 
+          it as input to the transformer network.
+        </p>
+    </div>
+  </div>
+  <div class="row pt-5">
+    <div class="col-md-4 offset-md-4">
+        <h5>
+          Is the code open source?
+        </h5>
+        <p>
+            Yup! The code is <a href="https://github.com/reiinakano/arbitrary-image-stylization-tfjs">hosted on Github</a>.
+        </p>
+    </div>
+  </div>
+  <div class="row pt-5">
+    <div class="col-md-4 offset-md-4">
+        <h5>
+          Plans for future work?
+        </h5>
+        <p>
+          I'd love to collaborate with people interested in making a suite of 
+          tools for artistically manipulating images, kind of like 
+          <a href="https://magenta.tensorflow.org/studio">Magenta Studio</a>
+          but for images. Please reach out if you're planning to build/are 
+          building one out!
+        </p>
+    </div>
+  </div>
+  <div class="row pt-5">
+    <div class="col-md-4 offset-md-4">
+        <h5>
+          Credits
+        </h5>
+        <p>
+          This demo was put together by <a href="https://github.com/reiinakano">Reiichiro Nakano</a>
+          but could not have been done without the following:
+        </p>
+        <ul>
+          <li>
+            Authors of the
+            <a href="https://arxiv.org/abs/1705.06830">arbitrary image stylization</a> paper.
+          </li>
+          <li>
+            The Magenta repository for <a href="https://github.com/tensorflow/magenta/tree/master/magenta/models/arbitrary_image_stylization">arbitrary image stylization</a>.
+          </li>
+          <li>
+            Authors of <a href="https://arxiv.org/abs/1801.04381">the MobileNet-v2 paper</a>.
+          </li>
+          <li>
+            Authors of the paper describing <a href="https://arxiv.org/abs/1503.02531">neural network knowledge distillation</a>.
+          </li>
+          <li>
+            The <a href="https://js.tensorflow.org">TensorFlow.js library</a>.
+          </li>
+          <li>
+            <a href="https://colab.research.google.com/">Google Colaboratory</a>, 
+            with which I was able to do all necessary training using a free(!) GPU.
+          </li>
+        </ul>
+    </div>
   </div>
 </div>
+</div>
+
+<!-- JQuery -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
 </body>
 </html>
