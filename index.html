@@ -91,13 +91,16 @@
   </div>
   <div class="tab-pane fade" id="combine" role="tabpanel" aria-labelledby="combine-tab">
     <div class="container">
-      <div class="row mb-4">
-        <div class="col">
+      <div class="row my-4">
+        <div class="col mx-5 my-4">
             <img id="c-style-img-1" class="centered" src="images/stripes.jpg" height=255></img>
             <br>
-            <input type="range" min="100" max="400" value="255" class="slider centered" id="c-style-img-1-size">
+            <label for="c-style-img-1-size">Style A Size</label>
+            <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" 
+            title="Changing the size of a style image usually affects the texture "seen" by the network."></i>
+            <input type="range" min="100" max="400" value="255" class="custom-range centered" id="c-style-img-1-size">
             <br>
-            <select id="c-style-1-select" class="centered">
+            <select id="c-style-1-select" class="centered custom-select">
               <option value="file">Select from file</option>
               <option value="udnie">udnie</option>
               <option value="stripes" selected="selected">stripes</option>
@@ -108,12 +111,15 @@
               <option value="sketch">sketch</option>
             </select>
         </div>
-        <div class="col">
+        <div class="col mx-5 my-4">
             <img id="c-style-img-2" class="centered" src="images/bricks.jpg" height=255></img>
             <br>
-            <input type="range" min="100" max="400" value="255" class="slider centered" id="c-style-img-2-size">
+            <label for="c-style-img-2-size">Style B Size</label>
+            <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" 
+            title="Changing the size of a style image usually affects the texture "seen" by the network."></i>
+            <input type="range" min="100" max="400" value="255" class="custom-range centered" id="c-style-img-2-size">
             <br>
-            <select id="c-style-2-select" class="centered">
+            <select id="c-style-2-select" class="centered custom-select">
               <option value="file">Select from file</option>
               <option value="udnie">udnie</option>
               <option value="stripes">stripes</option>
@@ -125,13 +131,16 @@
             </select>
         </div>
       </div>
-      <div class="row mb-4">
-        <div class="col">
+      <div class="row my-4">
+        <div class="col-md-4 offset-md-4">
             <img id="c-content-img" class="centered" src="images/stata.jpg" height=255></img>
             <br>
-            <input type="range" min="255" max="400" value="255" class="slider centered" id="c-content-img-size">
+            <label for="c-content-img-size">Content image size</label>
+            <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" 
+            title="A bigger content image results in a more detailed output, but increases the processing time significantly."></i>
+            <input type="range" min="255" max="400" value="255" class="custom-range centered" id="c-content-img-size">
             <br>
-            <select id="c-content-select" class="centered">
+            <select id="c-content-select" class="centered custom-select">
               <option value="file">Select from file</option>
               <option value="stata" selected="selected">stata</option>
               <option value="diana">diana</option>
@@ -141,16 +150,19 @@
             </select>
         </div>
       </div>
-      <div class="row mb-4">
-        <div class="col">
+      <div class="row my-4">
+        <div class="col-md-4 offset-md-4">
             <canvas id="c-stylized" class="centered"></canvas>
             <br>
-            <input type="range" min="0" max="100" value="50" class="slider centered" id="c-stylized-img-ratio">
+            <label for="c-stylized-img-ratio">Stylization Ratio</label>
+            <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" 
+            title="This parameter affects the strength of the two styles relative to each other. This is done via interpolation between the style vectors of the two style images."></i>
+            <input type="range" min="0" max="100" value="50" class="custom-range centered" id="c-stylized-img-ratio">
         </div>
       </div>
-      <div class="row mb-4">
+      <div class="row my-4">
         <div class="col">
-            <button disabled id="combine-button" class="centered">Loading stylization model. Please wait..</button>
+            <button disabled id="combine-button" type="button" class="btn btn-primary centered">Loading stylization model. Please wait..</button>
         </div>
       </div>
     </div>
