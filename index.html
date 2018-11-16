@@ -23,7 +23,14 @@
 
 <body>
 <input type="file" id="file-select" style="display: none" accept="image/x-png,image/gif,image/jpeg"/>
-<ul class="nav nav-tabs nav-fill mb-4" id="myTab" role="tablist">
+<!-- As a heading -->
+<div class="jumbotron jumbotron-fluid py-4" style="text-align: center; background-color: #f5f5f5;">
+    <div class="container">
+      <h4>Arbitrary Image Stylization in the Browser</h1>
+    </div>
+  </div>
+<div class="">
+<ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
   <li class="nav-item">
     <a class="nav-link active" id="stylize-tab" data-toggle="tab" href="#stylize" role="tab" aria-controls="stylize" aria-selected="true">Stylize an image</a>
   </li>
@@ -167,6 +174,111 @@
       </div>
     </div>
   </div>
+</div>
+<div class="container-fluid pt-5" style="background-color: #f5f5f5;">
+  <div class="row pt-5">
+    <div class="col-md-4 offset-md-4">
+        <h5>
+          What is this?
+        </h5>
+        <p>
+          This is an implementation of an arbitrary image stylization algorithm
+          running purely in the browser using TensorFlow.js. As with all neural 
+          style transfer algorithms, a neural network attempts to "draw" one 
+          picture, the Content (usually a photograph), in the style of another, 
+          the Style (usually a painting). 
+        </p>
+        <p>
+          Although other browser implementations of style transfer exist,
+          they are normally limited to a pre-selected handful of styles, due to
+          the requirement that a separate neural network must be trained for each
+          style image.
+        </p>
+        <p>
+          Arbitrary image stylization works around this limitation by using a
+          separate <i>style network</i> that learns to break down each image into 
+          a 100-dimensional vector representing its style. This style vector is 
+          then fed into another network, the <i>transformer network</i>, along
+          with the content image, to produce the final stylized image.
+        </p>
+    </div>
+  </div>
+  <div class="row pt-5">
+    <div class="col-md-4 offset-md-4">
+        <h5>
+          Is my data safe? Can you see my pictures?
+        </h5>
+        <p>
+          Your data and pictures here never leave your computer! In fact,
+          this is one of the main advantages of running neural networks 
+          in your browser. Instead of sending us your data, we send *you* 
+          both the model *and* the code to run the model. These are then 
+          run by your browser.
+        </p>
+    </div>
+  </div>
+  <div class="row pt-5">
+    <div class="col-md-4 offset-md-4">
+        <h5>
+          How big are the models I'm downloading?
+        </h5>
+        <p>
+          The style network is ~9.6MB, while the transformer network is ~7.9MB,
+          for a total of ~17.5MB. Since these models work for any style, you only 
+          have to download them once!
+        </p>
+    </div>
+  </div>
+  <div class="row pt-5">
+    <div class="col-md-4 offset-md-4">
+        <h5>
+          How does style combination work?
+        </h5>
+        <p>
+          Since each style can be mapped to a 100-dimensional 
+          style vector by the style network,
+          we simply take a weighted average of the two to get
+          a new style vector for the transformer network.
+        </p>
+        <p>
+          This is also how we are able to control the strength
+          of stylization. We take a weighted average of the style 
+          vectors of <i>both</i> content and style images and use 
+          it as input to the transformer network.
+        </p>
+    </div>
+  </div>
+  <div class="row pt-5">
+    <div class="col-md-4 offset-md-4">
+        <h5>
+          How does style combination work?
+        </h5>
+        <p>
+          Since each style can be mapped to a 100-dimensional 
+          style vector by the style network,
+          we simply take a weighted average of the two to get
+          a new style vector for the transformer network.
+        </p>
+        <p>
+          This is also how we are able to control the strength
+          of stylization for a single style. We take a weighted 
+          average of the style vectors of <i>both</i> content 
+          and style images and use it as input to the transformer
+          network.
+        </p>
+    </div>
+  </div>
+  <div class="row pt-5">
+    <div class="col-md-4 offset-md-4">
+        <h5>
+          Is the code open source?
+        </h5>
+        <p>
+            Yup! The code is <a href="https://github.com/reiinakano/arbitrary-image-stylization-tfjs">hosted on Github</a>.
+        </p>
+    </div>
+  </div>
+</div>
 </div>
 
 <!-- JQuery -->
