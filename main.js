@@ -8,6 +8,7 @@ import links from './links';
 class Main {
   constructor() {
     this.fileSelect = document.getElementById('file-select');
+    this.initalizeWebcamVariables();
     this.initializeStyleTransfer();
     this.initializeCombineStyles();
 
@@ -24,6 +25,52 @@ class Main {
       this.transformNet = transformNet;
       this.enableStylizeButtons()
     });
+  }
+
+  initalizeWebcamVariables() {
+    this.camModal = $('#cam-modal');
+
+    this.snapButton = document.getElementById('snap-button');
+    this.webcamVideoElement = document.getElementById('webcam-video');
+
+    navigator.getUserMedia = navigator.getUserMedia ||
+        navigator.webkitGetUserMedia || navigator.mozGetUserMedia ||
+        navigator.msGetUserMedia;
+
+    this.camModal.on('hidden.bs.modal', () => {
+      this.stream.getTracks()[0].stop();
+    })
+
+    this.camModal.on('shown.bs.modal', () => {
+      navigator.getUserMedia(
+        {
+          video: true
+        },
+        (stream) => {
+          this.stream = stream;
+          this.webcamVideoElement.srcObject = stream;
+          this.webcamVideoElement.play();
+        },
+        (err) => {
+          console.error(err);
+        }
+      );
+    })
+  }
+
+  openModal(element) {
+    this.camModal.modal('show');
+    this.snapButton.onclick = () => {
+      const hiddenCanvas = document.getElementById('hidden-canvas');
+      const hiddenContext = hiddenCanvas.getContext('2d');
+      hiddenCanvas.width = this.webcamVideoElement.width;
+      hiddenCanvas.height = this.webcamVideoElement.height;
+      hiddenContext.drawImage(this.webcamVideoElement, 0, 0, 
+        hiddenCanvas.width, hiddenCanvas.height);
+      const imageDataURL = hiddenCanvas.toDataURL('image/jpg');
+      element.src = imageDataURL;
+      this.camModal.modal('hide');
+    };
   }
 
   initializeStyleTransfer() {
@@ -154,6 +201,8 @@ class Main {
         this.fileSelect.value = '';
       }
       this.fileSelect.click();
+    } else if (selectedValue === 'pic') {
+      this.openModal(element);
     } else if (selectedValue === 'random') {
       const randomNumber = Math.floor(Math.random()*links.length);
       element.src = links[randomNumber];

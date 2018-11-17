@@ -51,6 +51,7 @@
               <input type="range" min="256" max="400" value="256" class="custom-range centered" id="content-img-size" >
               <br>
               <select id="content-select" class="centered custom-select">
+                <option value="pic">Take a picture</option>
                 <option value="file">Select from file</option>
                 <option value="stata">stata</option>
                 <option value="diana">diana</option>
@@ -164,6 +165,7 @@
             <input type="range" min="256" max="400" value="256" class="custom-range centered" id="c-content-img-size">
             <br>
             <select id="c-content-select" class="centered custom-select">
+              <option value="pic">Take a picture</option>
               <option value="file">Select from file</option>
               <option value="stata">stata</option>
               <option value="diana">diana</option>
@@ -199,6 +201,28 @@
     </div>
   </div>
 </div>
+
+<canvas id="hidden-canvas" style="display: none"></canvas>
+<div class="modal fade" id="cam-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Take a snapshot!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <video id="webcam-video" width="500" height="375"></video>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="snap-button">Snap!</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="container-fluid pt-5" style="background-color: #f5f5f5;">
   <div class="row">
     <div class="col-md-4 offset-md-4">
