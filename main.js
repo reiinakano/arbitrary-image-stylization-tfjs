@@ -1,5 +1,6 @@
 import 'babel-polyfill';
 import * as tf from '@tensorflow/tfjs';
+import links from './links';
 
 /**
  * Main application to start on window load
@@ -28,7 +29,13 @@ class Main {
   initializeStyleTransfer() {
     // Initialize images
     this.contentImg = document.getElementById('content-img');
+    this.contentImg.onerror = () => {
+      alert("Error loading " + this.contentImg.src + ".");
+    }
     this.styleImg = document.getElementById('style-img');
+    this.styleImg.onerror = () => {
+      alert("Error loading " + this.styleImg.src + ".");
+    }
     this.stylized = document.getElementById('stylized');
 
     // Initialize images
@@ -62,8 +69,17 @@ class Main {
   initializeCombineStyles() {
     // Initialize images
     this.combContentImg = document.getElementById('c-content-img');
+    this.combContentImg.onerror = () => {
+      alert("Error loading " + this.combContentImg.src + ".");
+    }
     this.combStyleImg1 = document.getElementById('c-style-img-1');
+    this.combStyleImg1.onerror = () => {
+      alert("Error loading " + this.combStyleImg1.src + ".");
+    }
     this.combStyleImg2 = document.getElementById('c-style-img-2');
+    this.combStyleImg2.onerror = () => {
+      alert("Error loading " + this.combStyleImg2.src + ".");
+    }
     this.combStylized = document.getElementById('c-stylized');
 
     // Initialize images
@@ -118,6 +134,9 @@ class Main {
         this.fileSelect.value = '';
       }
       this.fileSelect.click();
+    } else if (selectedValue === 'random') {
+      const randomNumber = Math.floor(Math.random()*links.length);
+      element.src = links[randomNumber];
     } else {
       element.src = 'images/' + selectedValue + '.jpg';
     }

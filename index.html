@@ -43,12 +43,12 @@
       <div class="container">
         <div class="row my-4">
           <div class="col mx-5 my-4">
-              <img id="content-img" class="centered" src="images/stata.jpg" height=255></img>
+              <img id="content-img" class="centered" src="images/stata.jpg" height=256></img>
               <br>
               <label for="content-img-size">Content image size</label>
               <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" 
               title="A bigger content image results in a more detailed output, but increases the processing time significantly."></i>
-              <input type="range" min="255" max="400" value="255" class="custom-range centered" id="content-img-size" >
+              <input type="range" min="256" max="400" value="256" class="custom-range centered" id="content-img-size" >
               <br>
               <select id="content-select" class="centered custom-select">
                 <option value="file">Select from file</option>
@@ -60,15 +60,16 @@
               </select>
           </div>
           <div class="col mx-5 my-4">
-              <img id="style-img" class="centered" src="images/udnie.jpg" height=255></img>
+              <img id="style-img" class="centered" crossorigin="anonymous" src="images/udnie.jpg" height=256></img>
               <br>
               <label for="style-img-size">Style image size</label>
               <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" 
               title='Changing the size of a style image usually affects the texture "seen" by the network.'></i>
-              <input type="range" min="100" max="400" value="255" class="custom-range centered" id="style-img-size">
+              <input type="range" min="100" max="400" value="256" class="custom-range centered" id="style-img-size">
               <br>
               <select id="style-select" class="centered custom-select">
                 <option value="file">Select from file</option>
+                <option value="random">Random image from wikiart.org</option>
                 <option value="udnie" selected="selected">udnie</option>
                 <option value="stripes">stripes</option>
                 <option value="bricks">bricks</option>
@@ -100,15 +101,16 @@
     <div class="container">
       <div class="row my-4">
         <div class="col mx-5 my-4">
-            <img id="c-style-img-1" class="centered" src="images/stripes.jpg" height=255></img>
+            <img id="c-style-img-1" class="centered" crossorigin="anonymous" src="images/stripes.jpg" height=256></img>
             <br>
             <label for="c-style-img-1-size">Style A Size</label>
             <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" 
             title="Changing the size of a style image usually affects the texture "seen" by the network."></i>
-            <input type="range" min="100" max="400" value="255" class="custom-range centered" id="c-style-img-1-size">
+            <input type="range" min="100" max="400" value="256" class="custom-range centered" id="c-style-img-1-size">
             <br>
             <select id="c-style-1-select" class="centered custom-select">
               <option value="file">Select from file</option>
+              <option value="random">Random image from wikiart.org</option>
               <option value="udnie">udnie</option>
               <option value="stripes" selected="selected">stripes</option>
               <option value="bricks">bricks</option>
@@ -119,15 +121,16 @@
             </select>
         </div>
         <div class="col mx-5 my-4">
-            <img id="c-style-img-2" class="centered" src="images/bricks.jpg" height=255></img>
+            <img id="c-style-img-2" class="centered" crossorigin="anonymous" src="images/bricks.jpg" height=256></img>
             <br>
             <label for="c-style-img-2-size">Style B Size</label>
             <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" 
             title="Changing the size of a style image usually affects the texture "seen" by the network."></i>
-            <input type="range" min="100" max="400" value="255" class="custom-range centered" id="c-style-img-2-size">
+            <input type="range" min="100" max="400" value="256" class="custom-range centered" id="c-style-img-2-size">
             <br>
             <select id="c-style-2-select" class="centered custom-select">
               <option value="file">Select from file</option>
+              <option value="random">Random image from wikiart.org</option>
               <option value="udnie">udnie</option>
               <option value="stripes">stripes</option>
               <option value="bricks" selected="selected">bricks</option>
@@ -140,12 +143,12 @@
       </div>
       <div class="row my-4">
         <div class="col-md-4 offset-md-4">
-            <img id="c-content-img" class="centered" src="images/stata.jpg" height=255></img>
+            <img id="c-content-img" class="centered" src="images/stata.jpg" height=256></img>
             <br>
             <label for="c-content-img-size">Content image size</label>
             <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" 
             title="A bigger content image results in a more detailed output, but increases the processing time significantly."></i>
-            <input type="range" min="255" max="400" value="255" class="custom-range centered" id="c-content-img-size">
+            <input type="range" min="256" max="400" value="256" class="custom-range centered" id="c-content-img-size">
             <br>
             <select id="c-content-select" class="centered custom-select">
               <option value="file">Select from file</option>
