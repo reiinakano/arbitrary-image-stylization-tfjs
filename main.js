@@ -93,7 +93,8 @@ class Main {
     this.contentImgSlider = document.getElementById('content-img-size');
     this.connectImageAndSizeSlider(this.contentImg, this.contentImgSlider);
     this.styleImgSlider = document.getElementById('style-img-size');
-    this.connectImageAndSizeSlider(this.styleImg, this.styleImgSlider);
+    this.styleImgSquare = document.getElementById('style-img-square');
+    this.connectImageAndSizeSlider(this.styleImg, this.styleImgSlider, this.styleImgSquare);
     
     this.styleRatio = 1.0
     this.styleRatioSlider = document.getElementById('stylized-img-ratio');
@@ -117,6 +118,9 @@ class Main {
       this.styleRatioSlider.dispatchEvent(new Event("input"));
       this.contentImgSlider.dispatchEvent(new Event("input"));
       this.styleImgSlider.dispatchEvent(new Event("input"));
+      if (getRndInteger(0, 1)) {
+        this.styleImgSquare.click();
+      }
     }
 
     // Initialize selectors
@@ -146,9 +150,11 @@ class Main {
     this.combContentImgSlider = document.getElementById('c-content-img-size');
     this.connectImageAndSizeSlider(this.combContentImg, this.combContentImgSlider);
     this.combStyleImg1Slider = document.getElementById('c-style-img-1-size');
-    this.connectImageAndSizeSlider(this.combStyleImg1, this.combStyleImg1Slider);
+    this.combStyleImg1Square = document.getElementById('c-style-1-square');
+    this.connectImageAndSizeSlider(this.combStyleImg1, this.combStyleImg1Slider, this.combStyleImg1Square);
     this.combStyleImg2Slider = document.getElementById('c-style-img-2-size');
-    this.connectImageAndSizeSlider(this.combStyleImg2, this.combStyleImg2Slider);
+    this.combStyleImg2Square = document.getElementById('c-style-2-square');
+    this.connectImageAndSizeSlider(this.combStyleImg2, this.combStyleImg2Slider, this.combStyleImg2Square);
 
     this.combStyleRatio = 0.5
     this.combStyleRatioSlider = document.getElementById('c-stylized-img-ratio');
@@ -174,6 +180,12 @@ class Main {
       this.combStyleImg1Slider.dispatchEvent(new Event("input"));
       this.combStyleImg2Slider.dispatchEvent(new Event("input"));
       this.combStyleRatioSlider.dispatchEvent(new Event("input"));
+      if (getRndInteger(0, 1)) {
+        this.combStyleImg1Square.click();
+      }
+      if (getRndInteger(0, 1)) {
+        this.combStyleImg2Square.click();
+      }
     }
 
     // Initialize selectors
@@ -185,9 +197,24 @@ class Main {
     this.combStyle2Select.onclick = (evt) => this.setImage(this.combStyleImg2, evt.target.value);
   }
 
-  connectImageAndSizeSlider(img, slider) {
+  connectImageAndSizeSlider(img, slider, square) {
     slider.oninput = (evt) => {
       img.height = evt.target.value;
+      if (img.style.width) {
+        // If this branch is triggered, then that means the image was forced to a square using
+        // a fixed pixel value.
+        img.style.width = '';  // Call this to bring back aspect ratio
+        img.style.width = img.height+"px";  // Fix width back to a square
+      }
+    }
+    if (square !== undefined) {
+      square.onclick = (evt) => {
+        if (evt.target.checked) {
+          img.style.width = img.height+"px";
+        } else {
+          img.style.width = '';
+        }
+      }
     }
   }
 
