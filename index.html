@@ -43,7 +43,7 @@
       <div class="container">
         <div class="row my-4">
           <div class="col mx-5 my-4">
-              <img id="content-img" class="centered" src="images/stata.jpg" height=256></img>
+              <img id="content-img" class="centered" src="images/golden_gate.jpg" height=256></img>
               <br>
               <label for="content-img-size">Content image size</label>
               <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" 
@@ -52,15 +52,16 @@
               <br>
               <select id="content-select" class="centered custom-select">
                 <option value="file">Select from file</option>
-                <option value="stata" selected="selected">stata</option>
+                <option value="stata">stata</option>
                 <option value="diana">diana</option>
-                <option value="face">face</option>
-                <option value="golden_gate">golden_gate</option>
+                <option value="golden_gate" selected="selected">golden_gate</option>
                 <option value="beach">beach</option>
+                <option value="chicago">chicago</option>
+                <option value="statue_of_liberty">statue_of_liberty</option>
               </select>
           </div>
           <div class="col mx-5 my-4">
-              <img id="style-img" class="centered" crossorigin="anonymous" src="images/udnie.jpg" height=256></img>
+              <img id="style-img" class="centered" crossorigin="anonymous" src="images/seaport.jpg" height=256></img>
               <br>
               <label for="style-img-size">Style image size</label>
               <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" 
@@ -70,13 +71,15 @@
               <select id="style-select" class="centered custom-select">
                 <option value="file">Select from file</option>
                 <option value="random">Random image from wikiart.org</option>
-                <option value="udnie" selected="selected">udnie</option>
+                <option value="udnie">udnie</option>
                 <option value="stripes">stripes</option>
                 <option value="bricks">bricks</option>
-                <option value="trees">trees</option>
                 <option value="clouds">clouds</option>
                 <option value="towers">towers</option>
                 <option value="sketch">sketch</option>
+                <option value="seaport" selected="selected">seaport</option>
+                <option value="red_circles">red_circles</option>
+                <option value="zigzag">zigzag</option>
               </select>
           </div>
         </div>
@@ -114,10 +117,12 @@
               <option value="udnie">udnie</option>
               <option value="stripes" selected="selected">stripes</option>
               <option value="bricks">bricks</option>
-              <option value="trees">trees</option>
               <option value="clouds">clouds</option>
               <option value="towers">towers</option>
               <option value="sketch">sketch</option>
+              <option value="seaport">seaport</option>
+              <option value="red_circles">red_circles</option>
+              <option value="zigzag">zigzag</option>
             </select>
         </div>
         <div class="col mx-5 my-4">
@@ -134,16 +139,18 @@
               <option value="udnie">udnie</option>
               <option value="stripes">stripes</option>
               <option value="bricks" selected="selected">bricks</option>
-              <option value="trees">trees</option>
               <option value="clouds">clouds</option>
               <option value="towers">towers</option>
               <option value="sketch">sketch</option>
+              <option value="seaport">seaport</option>
+              <option value="red_circles">red_circles</option>
+              <option value="zigzag">zigzag</option>
             </select>
         </div>
       </div>
       <div class="row my-4">
         <div class="col-md-4 offset-md-4">
-            <img id="c-content-img" class="centered" src="images/stata.jpg" height=256></img>
+            <img id="c-content-img" class="centered" src="images/statue_of_liberty.jpg" height=256></img>
             <br>
             <label for="c-content-img-size">Content image size</label>
             <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" 
@@ -152,11 +159,13 @@
             <br>
             <select id="c-content-select" class="centered custom-select">
               <option value="file">Select from file</option>
-              <option value="stata" selected="selected">stata</option>
+              <option value="stata">stata</option>
               <option value="diana">diana</option>
               <option value="face">face</option>
               <option value="golden_gate">golden_gate</option>
               <option value="beach">beach</option>
+              <option value="chicago">chicago</option>
+              <option value="statue_of_liberty" selected="selected">statue_of_liberty</option>
             </select>
         </div>
       </div>
@@ -192,14 +201,14 @@
           the Style (usually a painting). 
         </p>
         <p>
-          Although other browser implementations of style transfer exist,
+          Although <a href="https://github.com/reiinakano/fast-style-transfer-deeplearnjs">other browser implementations</a> of style transfer exist,
           they are normally limited to a pre-selected handful of styles, due to
           the requirement that a separate neural network must be trained for each
           style image.
         </p>
         <p>
           Arbitrary image stylization works around this limitation by using a
-          separate <i>style network</i> that learns to break down each image into 
+          separate <i>style network</i> that learns to break down <i>any</i> image into 
           a 100-dimensional vector representing its style. This style vector is 
           then fed into another network, the <i>transformer network</i>, along
           with the content image, to produce the final stylized image.
