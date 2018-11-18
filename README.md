@@ -3,7 +3,7 @@
 This repository contains an implementation of arbitrary image stylization running fully
 inside the browser using TensorFlow.js.
 
-Demo website: https://reiinakano.github.io/fast-style-transfer-deeplearnjs
+Demo website: https://reiinakano.github.io/arbitrary-image-stylization-tfjs
 
 ### Stylize an image
 
