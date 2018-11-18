@@ -220,7 +220,6 @@ class Main {
       if (img.style.width) {
         // If this branch is triggered, then that means the image was forced to a square using
         // a fixed pixel value.
-        img.style.width = '';  // Call this to bring back aspect ratio
         img.style.width = img.height+"px";  // Fix width back to a square
       }
     }
