@@ -142,9 +142,11 @@ class Main {
 
     // Initialize selectors
     this.contentSelect = document.getElementById('content-select');
-    this.contentSelect.onclick = (evt) => this.setImage(this.contentImg, evt.target.value);
+    this.contentSelect.onchange = (evt) => this.setImage(this.contentImg, evt.target.value);
+    this.contentSelect.onclick = () => this.contentSelect.value = '';
     this.styleSelect = document.getElementById('style-select');
-    this.styleSelect.onclick = (evt) => this.setImage(this.styleImg, evt.target.value);
+    this.styleSelect.onchange = (evt) => this.setImage(this.styleImg, evt.target.value);
+    this.styleSelect.onclick = () => this.styleSelect.value = '';
   }
 
   initializeCombineStyles() {
@@ -207,11 +209,14 @@ class Main {
 
     // Initialize selectors
     this.combContentSelect = document.getElementById('c-content-select');
-    this.combContentSelect.onclick = (evt) => this.setImage(this.combContentImg, evt.target.value);
+    this.combContentSelect.onchange = (evt) => this.setImage(this.combContentImg, evt.target.value);
+    this.combContentSelect.onclick = () => this.combContentSelect.value = '';
     this.combStyle1Select = document.getElementById('c-style-1-select');
-    this.combStyle1Select.onclick = (evt) => this.setImage(this.combStyleImg1, evt.target.value);
+    this.combStyle1Select.onchange = (evt) => this.setImage(this.combStyleImg1, evt.target.value);
+    this.combStyle1Select.onclick = () => this.combStyle1Select.value = '';
     this.combStyle2Select = document.getElementById('c-style-2-select');
-    this.combStyle2Select.onclick = (evt) => this.setImage(this.combStyleImg2, evt.target.value);
+    this.combStyle2Select.onchange = (evt) => this.setImage(this.combStyleImg2, evt.target.value);
+    this.combStyle2Select.onclick = () => this.combStyle2Select.value = '';
   }
 
   connectImageAndSizeSlider(img, slider, square) {
