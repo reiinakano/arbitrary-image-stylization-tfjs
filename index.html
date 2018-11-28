@@ -250,6 +250,17 @@ limitations under the License.
   </div>
 </div>
 
+<div class="container">
+  <div class="row my-4">
+    <div class="col-md-6 offset-md-3">
+        <select disabled id="model-select" class="centered custom-select">
+          <option value="mobilenet" selected="selected">Use distilled MobileNet style model</option>
+          <option value="inception">Use original Inceptionv3 style model (36.3MB)</option>
+        </select>
+    </div>
+  </div>
+</div>
+
 <canvas id="hidden-canvas" style="display: none"></canvas>
 <div class="modal fade" id="cam-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
@@ -333,18 +344,22 @@ limitations under the License.
   <div class="row pt-5">
     <div class="col-md-4 offset-md-4">
         <h5>
-          Are you using the same model as the original paper?
+          What is the difference between the "distilled MobileNet model" and the "original InceptionV3 model"?
         </h5>
         <p>
-          No. The original paper uses an Inception-v3 model 
-          as the style network (~96.2MB as a .tar.gz), which is too 
-          large to be deployed in a browser setting.
+          The original paper uses an Inception-v3 model 
+          as the style network, which takes up ~36.3MB 
+          when ported to the browser as a FrozenModel.
         </p>
         <p>
           Before porting this to the browser, a MobileNet-v2 was
           used to distill the knowledge from a pretrained Inception-v3 
-          style network. This resulted in a size reduction over 10x,
-          from ~96.2MB to ~9.6MB.
+          style network. This resulted in a size reduction of just under 4x,
+          from ~36.3MB to ~9.6MB, at the expense of some quality.
+        </p>
+        <p>
+          This demo lets you use either one, defaulting to
+          the distilled MobileNet-v2 model.
         </p>
     </div>
   </div>
