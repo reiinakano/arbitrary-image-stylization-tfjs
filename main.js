@@ -29,6 +29,8 @@ class Main {
     }
 
     this.fileSelect = document.getElementById('file-select');
+
+    // Initialize model selection
     this.modelSelect = document.getElementById('model-select');
     this.modelSelect.onchange = (evt) => {
       if (evt.target.value === 'mobilenet') {

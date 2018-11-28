@@ -49,16 +49,19 @@ The style network is ~9.6MB, while the transformer network is ~7.9MB,
 for a total of ~17.5MB. Since these models work for any style, you only 
 have to download them once!
 
-### Are you using the same model as the original paper?
+### What is the difference between the "distilled MobileNet model" and the "original InceptionV3 model"?
 
-No. The original paper uses an Inception-v3 model 
-as the style network (~96.2MB as a .tar.gz), which is too 
-large to be deployed in a browser setting.
+The original paper uses an Inception-v3 model 
+as the style network, which takes up ~36.3MB 
+when ported to the browser as a FrozenModel.
 
 Before porting this to the browser, a MobileNet-v2 was
 used to distill the knowledge from a pretrained Inception-v3 
-style network. This resulted in a size reduction over 10x,
-from ~96.2MB to ~9.6MB.
+style network. This resulted in a size reduction of just under 4x,
+from ~36.3MB to ~9.6MB, at the expense of some quality.
+
+This demo lets you use either one, defaulting to
+the distilled MobileNet-v2 model.
 
 ### How does style combination work?
 
@@ -71,10 +74,6 @@ This is also how we are able to control the strength
 of stylization. We take a weighted average of the style 
 vectors of *both* content and style images and use 
 it as input to the transformer network.
-
-### Is the code open source?
-
-Yup! The code is [hosted on Github](https://github.com/reiinakano/arbitrary-image-stylization-tfjs).
 
 ## Running locally for development
 
