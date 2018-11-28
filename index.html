@@ -250,6 +250,17 @@ limitations under the License.
   </div>
 </div>
 
+<div class="container">
+  <div class="row my-4">
+    <div class="col-md-6 offset-md-3">
+        <select disabled id="model-select" class="centered custom-select">
+          <option value="mobilenet" selected="selected">Use distilled MobileNet style model</option>
+          <option value="inception">Use original Inceptionv3 style model (36.3MB)</option>
+        </select>
+    </div>
+  </div>
+</div>
+
 <canvas id="hidden-canvas" style="display: none"></canvas>
 <div class="modal fade" id="cam-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">

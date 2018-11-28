@@ -29,14 +29,27 @@ class Main {
     }
 
     this.fileSelect = document.getElementById('file-select');
+    this.modelSelect = document.getElementById('model-select');
+    this.modelSelect.onchange = (evt) => {
+      if (evt.target.value === 'mobilenet') {
+        this.disableStylizeButtons();
+        this.loadMobileNetStyleModel().then((model) => {
+          this.styleNet = model;
+        }).finally(() => this.enableStylizeButtons());
+      } else if (evt.target.value === 'inception') {
+        this.disableStylizeButtons();
+        this.loadInceptionStyleModel().then(model => {
+          this.styleNet = model;
+        }).finally(() => this.enableStylizeButtons());
+      }
+    }
+
     this.initalizeWebcamVariables();
     this.initializeStyleTransfer();
     this.initializeCombineStyles();
 
     Promise.all([
-      tf.loadFrozenModel(
-        'saved_model_style_js/tensorflowjs_model.pb', 
-        'saved_model_style_js/weights_manifest.json'),
+      this.loadMobileNetStyleModel(),
       tf.loadFrozenModel(
         'saved_model_transformer_js/tensorflowjs_model.pb', 
         'saved_model_transformer_js/weights_manifest.json'),
@@ -46,6 +59,26 @@ class Main {
       this.transformNet = transformNet;
       this.enableStylizeButtons()
     });
+  }
+
+  async loadMobileNetStyleModel() {
+    if (!this.mobileStyleNet) {
+      this.mobileStyleNet = await tf.loadFrozenModel(
+        'saved_model_style_js/tensorflowjs_model.pb', 
+        'saved_model_style_js/weights_manifest.json');
+    }
+
+    return this.mobileStyleNet;
+  }
+
+  async loadInceptionStyleModel() {
+    if (!this.inceptionStyleNet) {
+      this.inceptionStyleNet = await tf.loadFrozenModel(
+        'saved_model_style_inception_js/tensorflowjs_model.pb',
+        'saved_model_style_inception_js/weights_manifest.json');
+    }
+    
+    return this.inceptionStyleNet;
   }
 
   initalizeWebcamVariables() {
@@ -266,6 +299,7 @@ class Main {
   enableStylizeButtons() {
     this.styleButton.disabled = false;
     this.combineButton.disabled = false;
+    this.modelSelect.disabled = false;
     this.styleButton.textContent = 'Stylize';
     this.combineButton.textContent = 'Combine Styles';
   }
@@ -273,6 +307,7 @@ class Main {
   disableStylizeButtons() {
     this.styleButton.disabled = true;
     this.combineButton.disabled = true;
+    this.modelSelect.disabled = true;
   }
 
   async startStyling() {
