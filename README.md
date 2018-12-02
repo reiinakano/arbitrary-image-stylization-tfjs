@@ -1,6 +1,6 @@
-# Arbitrary image stylization in TensorFlow.js
+# Arbitrary style transfer in TensorFlow.js
 
-This repository contains an implementation of arbitrary image stylization running fully
+This repository contains an implementation of arbitrary style transfer running fully
 inside the browser using TensorFlow.js.
 
 Demo website: https://reiinakano.github.io/arbitrary-image-stylization-tfjs
@@ -17,7 +17,7 @@ Demo website: https://reiinakano.github.io/arbitrary-image-stylization-tfjs
 
 ### What is this?
 
-This is an implementation of an arbitrary image stylization algorithm
+This is an implementation of an arbitrary style transfer algorithm
 running purely in the browser using TensorFlow.js. As with all neural 
 style transfer algorithms, a neural network attempts to "draw" one 
 picture, the Content (usually a photograph), in the style of another, 
@@ -29,7 +29,7 @@ they are normally limited to a pre-selected handful of styles, due to
 the requirement that a separate neural network must be trained for each
 style image.
 
-Arbitrary image stylization works around this limitation by using a
+Arbitrary style transfer works around this limitation by using a
 separate *style network* that learns to break down *any* image into 
 a 100-dimensional vector representing its style. This style vector is 
 then fed into another network, the *transformer network*, along
@@ -98,8 +98,8 @@ You can then browse to `localhost:9966` to view the application.
 
 This demo could not have been done without the following:
 
-* Authors of the [arbitrary image stylization](https://arxiv.org/abs/1705.06830) paper.
-* The Magenta repository for [arbitrary image stylization](https://github.com/tensorflow/magenta/tree/master/magenta/models/arbitrary_image_stylization).
+* Authors of the [arbitrary style transfer](https://arxiv.org/abs/1705.06830) paper.
+* The Magenta repository for [arbitrary style transfer](https://github.com/tensorflow/magenta/tree/master/magenta/models/arbitrary_image_stylization).
 * Authors of [the MobileNet-v2 paper](https://arxiv.org/abs/1801.04381).
 * Authors of the paper describing [neural network knowledge distillation](https://arxiv.org/abs/1503.02531).
 * The [TensorFlow.js library](https://js.tensorflow.org).
