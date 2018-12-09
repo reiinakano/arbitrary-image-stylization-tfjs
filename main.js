@@ -31,11 +31,11 @@ class Main {
     this.fileSelect = document.getElementById('file-select');
 
     // Initialize model selection
-    this.modelSelect = document.getElementById('model-select');
-    this.modelSelect.onchange = (evt) => {
+    this.modelSelectStyle = document.getElementById('model-select-style');
+    this.modelSelectStyle.onchange = (evt) => {
       if (evt.target.value === 'mobilenet') {
         this.disableStylizeButtons();
-        this.loadMobileNetStyleModel().then((model) => {
+        this.loadMobileNetStyleModel().then(model => {
           this.styleNet = model;
         }).finally(() => this.enableStylizeButtons());
       } else if (evt.target.value === 'inception') {
@@ -46,15 +46,28 @@ class Main {
       }
     }
 
+    this.modelSelectTransformer = document.getElementById('model-select-transformer');
+    this.modelSelectTransformer.onchange = (evt) => {
+      if (evt.target.value === 'original') {
+        this.disableStylizeButtons();
+        this.loadOriginalTransformerModel().then(model => {
+          this.transformNet = model;
+        }).finally(() => this.enableStylizeButtons());
+      } else if (evt.target.value === 'separable') {
+        this.disableStylizeButtons();
+        this.loadSeparableTransformerModel().then(model => {
+          this.transformNet = model;
+        }).finally(() => this.enableStylizeButtons());
+      }
+    }
+
     this.initalizeWebcamVariables();
     this.initializeStyleTransfer();
     this.initializeCombineStyles();
 
     Promise.all([
       this.loadMobileNetStyleModel(),
-      tf.loadFrozenModel(
-        'saved_model_transformer_js/tensorflowjs_model.pb', 
-        'saved_model_transformer_js/weights_manifest.json'),
+      this.loadOriginalTransformerModel(),
     ]).then(([styleNet, transformNet]) => {
       console.log('Loaded styleNet');  
       this.styleNet = styleNet;
@@ -81,6 +94,28 @@ class Main {
     }
     
     return this.inceptionStyleNet;
+  }
+
+  async loadOriginalTransformerModel() {
+    if (!this.originalTransformNet) {
+      this.originalTransformNet = await tf.loadFrozenModel(
+        'saved_model_transformer_js/tensorflowjs_model.pb',
+        'saved_model_transformer_js/weights_manifest.json'
+      );
+    }
+
+    return this.originalTransformNet;
+  }
+
+  async loadSeparableTransformerModel() {
+    if (!this.separableTransformNet) {
+      this.separableTransformNet = await tf.loadFrozenModel(
+        'saved_model_transformer_separable_js/tensorflowjs_model.pb',
+        'saved_model_transformer_separable_js/weights_manifest.json'
+      );
+    }
+
+    return this.separableTransformNet;
   }
 
   initalizeWebcamVariables() {
@@ -301,7 +336,8 @@ class Main {
   enableStylizeButtons() {
     this.styleButton.disabled = false;
     this.combineButton.disabled = false;
-    this.modelSelect.disabled = false;
+    this.modelSelectStyle.disabled = false;
+    this.modelSelectTransformer.disabled = false;
     this.styleButton.textContent = 'Stylize';
     this.combineButton.textContent = 'Combine Styles';
   }
@@ -309,7 +345,8 @@ class Main {
   disableStylizeButtons() {
     this.styleButton.disabled = true;
     this.combineButton.disabled = true;
-    this.modelSelect.disabled = true;
+    this.modelSelectStyle.disabled = true;
+    this.modelSelectTransformer.disabled = true;
   }
 
   async startStyling() {
