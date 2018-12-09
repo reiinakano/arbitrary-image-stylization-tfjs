@@ -252,10 +252,16 @@ limitations under the License.
 
 <div class="container">
   <div class="row my-4">
-    <div class="col-md-6 offset-md-3">
-        <select disabled id="model-select" class="centered custom-select">
-          <option value="mobilenet" selected="selected">Use distilled MobileNet style model</option>
-          <option value="inception">Use original Inceptionv3 style model (36.3MB)</option>
+    <div class="col-md-3 offset-md-3">
+        <select disabled id="model-select-style" class="centered custom-select">
+          <option value="mobilenet" selected="selected">Distilled MobileNet style model (9.6MB)</option>
+          <option value="inception">Original Inceptionv3 style model (36.3MB)</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <select disabled id="model-select-transformer" class="centered custom-select">
+          <option value="original" selected="selected">Original transformer model (7.9MB)</option>
+          <option value="separable">Separable_conv2d transformer (2.4MB) (Experimental)</option>
         </select>
     </div>
   </div>
