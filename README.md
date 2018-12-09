@@ -43,25 +43,37 @@ in your browser. Instead of sending us your data, we send *you*
 both the model *and* the code to run the model. These are then 
 run by your browser.
 
-### How big are the models I'm downloading?
-
-The style network is ~9.6MB, while the transformer network is ~7.9MB,
-for a total of ~17.5MB. Since these models work for any style, you only 
-have to download them once!
-
-### What is the difference between the "distilled MobileNet model" and the "original InceptionV3 model"?
+### What are all these different models?
 
 The original paper uses an Inception-v3 model 
 as the style network, which takes up ~36.3MB 
 when ported to the browser as a FrozenModel.
 
-Before porting this to the browser, a MobileNet-v2 was
-used to distill the knowledge from a pretrained Inception-v3 
+In order to make this model smaller, a MobileNet-v2 was
+used to distill the knowledge from the pretrained Inception-v3 
 style network. This resulted in a size reduction of just under 4x,
 from ~36.3MB to ~9.6MB, at the expense of some quality.
 
-This demo lets you use either one, defaulting to
-the distilled MobileNet-v2 model.
+For the transformer network, the original paper uses 
+a model using plain convolution layers. When ported to
+the browser, this model takes up 7.9MB and is responsible
+for the majority of the calculations during stylization.
+
+In order to make the transformer model more efficient, most of the
+plain convolution layers were replaced with depthwise separable 
+convolutions. This reduced the model size to 2.4MB, while
+drastically improving the speed of stylization. It is
+currently experimental, as the drop in quality is rather noticeable.
+
+This demo lets you use any combination of the models, defaulting
+to the MobileNet-v2 style network and the original transformer
+network.
+
+### How big are the models I'm downloading?
+
+The style network is ~9.6MB, while the transformer network is ~7.9MB,
+for a total of ~17.5MB. Since these models work for any style, you only 
+have to download them once!
 
 ### How does style combination work?
 
