@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "author": "Reiichiro Nakano <reiichiro.s.nakano@gmail.com>",
   "dependencies": {
-    "@tensorflow/tfjs": "^0.13.0",
+    "@tensorflow/tfjs": "^0.14.1",
     "babel-polyfill": "~6.26.0"
   },
   "scripts": {
