@@ -45,33 +45,43 @@
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
 
-"@tensorflow/tfjs-converter@0.6.6":
-  version "0.6.6"
-  resolved "https://registry.yarnpkg.com/@tensorflow/tfjs-converter/-/tfjs-converter-0.6.6.tgz#1688ca889b63548434dc4e9f0447f568488cae9e"
+"@tensorflow/tfjs-converter@0.7.1":
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/@tensorflow/tfjs-converter/-/tfjs-converter-0.7.1.tgz#af33b89f34fdfbdfbe8d9361c5542d7db514364d"
   dependencies:
     "@types/long" "~3.0.32"
     protobufjs "~6.8.6"
 
-"@tensorflow/tfjs-core@0.13.10":
-  version "0.13.10"
-  resolved "https://registry.yarnpkg.com/@tensorflow/tfjs-core/-/tfjs-core-0.13.10.tgz#dab52099542d683fa655fb46ac5fec16af43ced6"
+"@tensorflow/tfjs-core@0.14.2":
+  version "0.14.2"
+  resolved "https://registry.yarnpkg.com/@tensorflow/tfjs-core/-/tfjs-core-0.14.2.tgz#b1ee6af0d893782a1c3b2c988091c36c42f1d7a4"
   dependencies:
     "@types/seedrandom" "2.4.27"
     "@types/webgl-ext" "0.0.30"
     "@types/webgl2" "0.0.4"
     seedrandom "2.4.3"
 
-"@tensorflow/tfjs-layers@0.8.4":
-  version "0.8.4"
-  resolved "https://registry.yarnpkg.com/@tensorflow/tfjs-layers/-/tfjs-layers-0.8.4.tgz#e4786b2886565bd92c29d6c9444a5dac2266ffed"
-
-"@tensorflow/tfjs@^0.13.0":
-  version "0.13.4"
-  resolved "https://registry.yarnpkg.com/@tensorflow/tfjs/-/tfjs-0.13.4.tgz#65e97a453fb4363018d27d25f6648f6351715c10"
+"@tensorflow/tfjs-data@0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@tensorflow/tfjs-data/-/tfjs-data-0.1.4.tgz#4732a2505c5d7d0d8ba0458f5b92837fd02ba442"
   dependencies:
-    "@tensorflow/tfjs-converter" "0.6.6"
-    "@tensorflow/tfjs-core" "0.13.10"
-    "@tensorflow/tfjs-layers" "0.8.4"
+    "@types/node-fetch" "^2.1.2"
+    node-fetch "~2.1.2"
+    seedrandom "~2.4.3"
+    utf8 "~2.1.2"
+
+"@tensorflow/tfjs-layers@0.9.1":
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/@tensorflow/tfjs-layers/-/tfjs-layers-0.9.1.tgz#685b741cf5c42aa9b2621485ffafdcc43c8db699"
+
+"@tensorflow/tfjs@^0.14.1":
+  version "0.14.1"
+  resolved "https://registry.yarnpkg.com/@tensorflow/tfjs/-/tfjs-0.14.1.tgz#d9b198c26eb1f154c5c27228800c9df7630d2cbf"
+  dependencies:
+    "@tensorflow/tfjs-converter" "0.7.1"
+    "@tensorflow/tfjs-core" "0.14.2"
+    "@tensorflow/tfjs-data" "0.1.4"
+    "@tensorflow/tfjs-layers" "0.9.1"
 
 "@types/long@^4.0.0":
   version "4.0.0"
@@ -80,6 +90,16 @@
 "@types/long@~3.0.32":
   version "3.0.32"
   resolved "https://registry.yarnpkg.com/@types/long/-/long-3.0.32.tgz#f4e5af31e9e9b196d8e5fca8a5e2e20aa3d60b69"
+
+"@types/node-fetch@^2.1.2":
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.1.4.tgz#093d1beae11541aef25999d70aa09286fd025b1a"
+  dependencies:
+    "@types/node" "*"
+
+"@types/node@*":
+  version "10.12.12"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.12.tgz#e15a9d034d9210f00320ef718a50c4a799417c47"
 
 "@types/node@^10.1.0":
   version "10.12.6"
@@ -2664,6 +2684,10 @@ needle@^2.2.1:
     iconv-lite "^0.4.4"
     sax "^1.2.4"
 
+node-fetch@~2.1.2:
+  version "2.1.2"
+  resolved "http://registry.npmjs.org/node-fetch/-/node-fetch-2.1.2.tgz#ab884e8e7e57e38a944753cec706f788d1768bb5"
+
 node-pre-gyp@^0.10.0:
   version "0.10.3"
   resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.10.3.tgz#3070040716afdc778747b61b6887bf78880b80fc"
@@ -3351,6 +3375,10 @@ seedrandom@2.4.3:
   version "2.4.3"
   resolved "https://registry.yarnpkg.com/seedrandom/-/seedrandom-2.4.3.tgz#2438504dad33917314bff18ac4d794f16d6aaecc"
 
+seedrandom@~2.4.3:
+  version "2.4.4"
+  resolved "https://registry.yarnpkg.com/seedrandom/-/seedrandom-2.4.4.tgz#b25ea98632c73e45f58b77cfaa931678df01f9ba"
+
 "semver@2 || 3 || 4 || 5", semver@^5.3.0:
   version "5.6.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.6.0.tgz#7e74256fbaa49c75aa7c7a205cc22799cac80004"
@@ -3893,6 +3921,10 @@ url@~0.11.0:
 use@^3.1.0:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"
+
+utf8@~2.1.2:
+  version "2.1.2"
+  resolved "http://registry.npmjs.org/utf8/-/utf8-2.1.2.tgz#1fa0d9270e9be850d9b05027f63519bf46457d96"
 
 util-deprecate@~1.0.1:
   version "1.0.2"
