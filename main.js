@@ -413,6 +413,65 @@ class Main {
     stylized.dispose();
   }
 
+  async benchmark() {
+    const x = tf.randomNormal([1, 256, 256, 3]);
+    const bottleneck = tf.randomNormal([1, 1, 1, 100]);
+
+    let styleNet = await this.loadInceptionStyleModel();
+    let time = await this.benchmarkStyle(x, styleNet);
+    console.log(time);
+    styleNet.dispose();
+
+    styleNet = await this.loadMobileNetStyleModel();
+    time = await this.benchmarkStyle(x, styleNet);
+    console.log(time);
+    styleNet.dispose();
+
+    let transformNet = await this.loadOriginalTransformerModel();
+    time = await this.benchmarkTransform(
+        x, bottleneck, transformNet);
+    console.log(time);
+    transformNet.dispose();
+
+    transformNet = await this.loadSeparableTransformerModel();
+    time = await this.benchmarkTransform(
+      x, bottleneck, transformNet);
+    console.log(time);
+    transformNet.dispose();
+
+    x.dispose();
+    bottleneck.dispose();
+  }
+
+  async benchmarkStyle(x, styleNet) {
+    tf.tidy(() => {
+      let dummyOut = styleNet.predict(x);
+      dummyOut.print();
+    });
+    return await tf.time(() => {
+      tf.tidy(() => {
+        for (let i = 0; i < 10; i++) {
+          let y = styleNet.predict(x);
+          y.print();
+        }
+      })
+    });
+  }
+
+  async benchmarkTransform(x, bottleneck, transformNet) {
+    tf.tidy(() => {
+      let dummyOut = transformNet.predict([x, bottleneck]);
+      dummyOut.print();
+    });
+    return await tf.time(() => {
+      tf.tidy(() => {
+        for (let i = 0; i < 10; i++) {
+          let y = transformNet.predict([x, bottleneck]);
+          y.print();
+        }
+      })
+    });
+  }
 }
 
 function getRndInteger(min, max) {
