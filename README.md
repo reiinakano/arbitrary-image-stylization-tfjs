@@ -70,8 +70,9 @@ transformer network.
 
 ### How big are the models I'm downloading?
 
-The style network is ~9.6MB, while the transformer network is ~7.9MB,
-for a total of ~17.5MB. Since these models work for any style, you only 
+The distilled style network is ~9.6MB, while the separable convolution
+transformer network is ~2.4MB, for a total of ~12MB. 
+Since these models work for any style, you only 
 have to download them once!
 
 ### How does style combination work?
