@@ -69,7 +69,7 @@ class Main {
       this.loadMobileNetStyleModel(),
       this.loadSeparableTransformerModel(),
     ]).then(([styleNet, transformNet]) => {
-      console.log('Loaded styleNet');  
+      console.log('Loaded styleNet');
       this.styleNet = styleNet;
       this.transformNet = transformNet;
       this.enableStylizeButtons()
@@ -419,24 +419,20 @@ class Main {
 
     let styleNet = await this.loadInceptionStyleModel();
     let time = await this.benchmarkStyle(x, styleNet);
-    console.log(time);
     styleNet.dispose();
 
     styleNet = await this.loadMobileNetStyleModel();
     time = await this.benchmarkStyle(x, styleNet);
-    console.log(time);
     styleNet.dispose();
 
     let transformNet = await this.loadOriginalTransformerModel();
     time = await this.benchmarkTransform(
         x, bottleneck, transformNet);
-    console.log(time);
     transformNet.dispose();
 
     transformNet = await this.loadSeparableTransformerModel();
     time = await this.benchmarkTransform(
       x, bottleneck, transformNet);
-    console.log(time);
     transformNet.dispose();
 
     x.dispose();
@@ -444,33 +440,41 @@ class Main {
   }
 
   async benchmarkStyle(x, styleNet) {
-    tf.tidy(() => {
-      let dummyOut = styleNet.predict(x);
-      dummyOut.print();
+    const profile = await tf.profile(() => {
+      tf.tidy(() => {
+        const dummyOut = styleNet.predict(x);
+        dummyOut.print();
+      });
     });
-    return await tf.time(() => {
+    console.log(profile);
+    const time = await tf.time(() => {
       tf.tidy(() => {
         for (let i = 0; i < 10; i++) {
-          let y = styleNet.predict(x);
+          const y = styleNet.predict(x);
           y.print();
         }
       })
     });
+    console.log(time);
   }
 
   async benchmarkTransform(x, bottleneck, transformNet) {
-    tf.tidy(() => {
-      let dummyOut = transformNet.predict([x, bottleneck]);
-      dummyOut.print();
+    const profile = await tf.profile(() => {
+      tf.tidy(() => {
+        const dummyOut = transformNet.predict([x, bottleneck]);
+        dummyOut.print();
+      });
     });
-    return await tf.time(() => {
+    console.log(profile);
+    const time = await tf.time(() => {
       tf.tidy(() => {
         for (let i = 0; i < 10; i++) {
-          let y = transformNet.predict([x, bottleneck]);
+          const y = transformNet.predict([x, bottleneck]);
           y.print();
         }
       })
     });
+    console.log(time);
   }
 }
 
