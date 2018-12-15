@@ -62,12 +62,11 @@ for the majority of the calculations during stylization.
 In order to make the transformer model more efficient, most of the
 plain convolution layers were replaced with depthwise separable 
 convolutions. This reduced the model size to 2.4MB, while
-drastically improving the speed of stylization. It is
-currently experimental, as the drop in quality is rather noticeable.
+drastically improving the speed of stylization.
 
 This demo lets you use any combination of the models, defaulting
-to the MobileNet-v2 style network and the original transformer
-network.
+to the MobileNet-v2 style network and the separable convolution
+transformer network.
 
 ### How big are the models I'm downloading?
 

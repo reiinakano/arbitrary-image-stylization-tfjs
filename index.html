@@ -260,8 +260,8 @@ limitations under the License.
     </div>
     <div class="col-md-3">
         <select disabled id="model-select-transformer" class="centered custom-select">
-          <option value="original" selected="selected">Original transformer model (7.9MB)</option>
-          <option value="separable">Separable_conv2d transformer (2.4MB) (Experimental)</option>
+          <option value="original">Original transformer model (7.9MB)</option>
+          <option value="separable" selected="selected">Separable_conv2d transformer (2.4MB) (Experimental)</option>
         </select>
     </div>
   </div>
@@ -361,13 +361,12 @@ limitations under the License.
           In order to make the transformer model more efficient, most of the
           plain convolution layers were replaced with depthwise separable 
           convolutions. This reduced the model size to 2.4MB, while
-          drastically improving the speed of stylization. It is
-          currently experimental, as the drop in quality is rather noticeable.
+          drastically improving the speed of stylization.
         </p>
         <p>
           This demo lets you use any combination of the models, defaulting
-          to the MobileNet-v2 style network and the original transformer
-          network.
+          to the MobileNet-v2 style network and the separable convolution
+          transformer network.
         </p>
     </div>
   </div>
@@ -377,8 +376,9 @@ limitations under the License.
           How big are the models I'm downloading?
         </h5>
         <p>
-          The style network is ~9.6MB, while the transformer network is ~7.9MB,
-          for a total of ~17.5MB. Since these models work for any style, you only 
+          The distilled style network is ~9.6MB, while the separable convolution
+          transformer network is ~2.4MB,
+          for a total of ~12MB. Since these models work for any style, you only 
           have to download them once!
         </p>
     </div>
