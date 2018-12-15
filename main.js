@@ -67,7 +67,7 @@ class Main {
 
     Promise.all([
       this.loadMobileNetStyleModel(),
-      this.loadOriginalTransformerModel(),
+      this.loadSeparableTransformerModel(),
     ]).then(([styleNet, transformNet]) => {
       console.log('Loaded styleNet');  
       this.styleNet = styleNet;
