@@ -4,8 +4,7 @@
 
 Demo地址：https://reiinakano.github.io/arbitrary-image-stylization-tfjs
 
-### Stylize an image
-
+### 风格化一张图片
 ![stylize](readme_img/stylize.jpg)
 
 ### Combine styles
