@@ -2,7 +2,6 @@
 
 该项目是一个基于[TensorFlow.js](https://js.tensorflow.org/)的纯浏览器端任意风格迁移实现。
 
-Demo website: https://reiinakano.github.io/arbitrary-image-stylization-tfjs
 Demo地址：https://reiinakano.github.io/arbitrary-image-stylization-tfjs
 
 ### Stylize an image
