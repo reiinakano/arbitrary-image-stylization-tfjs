@@ -1,19 +1,20 @@
-# 基于TensorFlow.js的任意风格迁移
+# 基于TensorFlow.js的图片风格迁移
 
-该项目是一个基于[TensorFlow.js](https://js.tensorflow.org/)的纯浏览器端任意风格迁移实现。
+该项目是一个基于[TensorFlow.js](https://js.tensorflow.org/)的浏览器端图片任意风格迁移实现。
 
 Demo地址：https://reiinakano.github.io/arbitrary-image-stylization-tfjs
 
-### 风格化一张图片
+### 单风格迁移
+
 ![stylize](readme_img/stylize.jpg)
 
-### Combine styles
+### 多风格迁移
 
 ![combine](readme_img/combine.jpg)
 
-## FAQ
+## 常见问题
 
-### What is this?
+### 是什么
 
 This is an implementation of an arbitrary style transfer algorithm
 running purely in the browser using TensorFlow.js. As with all neural 
@@ -33,7 +34,7 @@ a 100-dimensional vector representing its style. This style vector is
 then fed into another network, the *transformer network*, along
 with the content image, to produce the final stylized image.
 
-### Is my data safe? Can you see my pictures?
+### 我的数据安全吗？你能看到我的图片吗？
 
 Your data and pictures here never leave your computer! In fact,
 this is one of the main advantages of running neural networks 
@@ -41,7 +42,7 @@ in your browser. Instead of sending us your data, we send *you*
 both the model *and* the code to run the model. These are then 
 run by your browser.
 
-### What are all these different models?
+### 这些模型的区别是什么？
 
 The original paper uses an Inception-v3 model 
 as the style network, which takes up ~36.3MB 
@@ -66,14 +67,14 @@ This demo lets you use any combination of the models, defaulting
 to the MobileNet-v2 style network and the separable convolution
 transformer network.
 
-### How big are the models I'm downloading?
+### 我下载的模型有多大？
 
 The distilled style network is ~9.6MB, while the separable convolution
 transformer network is ~2.4MB, for a total of ~12MB. 
 Since these models work for any style, you only 
 have to download them once!
 
-### How does style combination work?
+### 风格杂糅是怎么实现的？
 
 Since each style can be mapped to a 100-dimensional 
 style vector by the style network,
@@ -85,7 +86,7 @@ of stylization. We take a weighted average of the style
 vectors of *both* content and style images and use 
 it as input to the transformer network.
 
-## Running locally for development
+## 本地开发调试
 
 This project uses [Yarn](https://yarnpkg.com/en/) for dependencies.
 
@@ -104,7 +105,7 @@ yarn run start
 You can then browse to `localhost:9966` to view the application.
 
 
-## Credits
+## 鸣谢
 
 This demo could not have been done without the following:
 
