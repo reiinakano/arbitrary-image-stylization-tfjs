@@ -1,6 +1,6 @@
-# 基于TensorFlow.js的图片风格迁移
+# 基于TensorFlow.js的图像风格迁移
 
-该项目是一个基于[TensorFlow.js](https://js.tensorflow.org/)的浏览器端图片任意风格迁移实现。
+该项目是一个基于[TensorFlow.js](https://js.tensorflow.org/)的浏览器端图像风格迁移实现。
 
 Demo地址：https://reiinakano.github.io/arbitrary-image-stylization-tfjs
 
@@ -14,13 +14,14 @@ Demo地址：https://reiinakano.github.io/arbitrary-image-stylization-tfjs
 
 ## 常见问题
 
-### 是什么
+### 概述
 
 This is an implementation of an arbitrary style transfer algorithm
 running purely in the browser using TensorFlow.js. As with all neural 
 style transfer algorithms, a neural network attempts to "draw" one 
 picture, the Content (usually a photograph), in the style of another, 
 the Style (usually a painting). 
+这是一个基于TensorFlow.js的浏览器端图像风格迁移算法实现。跟所有基于神经网络的图像风格迁移算法一样，神经网络（[NN](https://zh.wikipedia.org/wiki/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)）试图去“画”一张图，图的内容（通常是一张照片）
 
 Although [other browser implementations](https://github.com/reiinakano/fast-style-transfer-deeplearnjs)
 of style transfer exist,
