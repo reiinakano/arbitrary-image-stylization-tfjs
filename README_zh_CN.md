@@ -1,4 +1,4 @@
-# Arbitrary style transfer in TensorFlow.js
+# TensorFlow.js 中的任意风格转换
 
 This repository contains an implementation of arbitrary style transfer running fully
 inside the browser using TensorFlow.js.
