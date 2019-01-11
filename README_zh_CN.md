@@ -1,6 +1,6 @@
-# 基于TensorFlow.js的图像风格迁移
+# 基于TensorFlow.js的图像任意风格迁移
 
-该项目是一个基于[TensorFlow.js](https://js.tensorflow.org/)的浏览器端图像风格迁移实现。
+该项目是一个基于[TensorFlow.js](https://js.tensorflow.org/)的浏览器端图像任意风格迁移实现。
 
 Demo地址：https://reiinakano.github.io/arbitrary-image-stylization-tfjs
 
@@ -16,19 +16,11 @@ Demo地址：https://reiinakano.github.io/arbitrary-image-stylization-tfjs
 
 ### 概述
 
-这是一个基于TensorFlow.js的浏览器端图像风格迁移算法实现。跟所有基于神经网络的图像风格迁移算法一样，[神经网络](https://zh.wikipedia.org/wiki/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)试图去“画”一张图，图的内容源自一张图（通常是一张照片），图的风格源自另一张图（通常是一幅画）
+这是一个基于TensorFlow.js的浏览器端图像任意风格迁移算法实现。跟所有基于神经网络的图像风格迁移算法一样，[神经网络](https://zh.wikipedia.org/wiki/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)试图去“画”一张画，画的内容源自一张图（通常是一张照片），画的风格源自另一张图（通常是一幅画）。
 
-Although [other browser implementations](https://github.com/reiinakano/fast-style-transfer-deeplearnjs)
-of style transfer exist,
-they are normally limited to a pre-selected handful of styles, due to
-the requirement that a separate neural network must be trained for each
-style image.
+虽然也有其他[浏览器端图像风格迁移实现](https://github.com/reiinakano/fast-style-transfer-deeplearnjs)，但它们往往局限于少数预置画风，因为每种画风都需要提前训练一个与之对应的[神经网络](https://zh.wikipedia.org/wiki/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)模型。
 
-Arbitrary style transfer works around this limitation by using a
-separate *style network* that learns to break down *any* image into 
-a 100-dimensional vector representing its style. This style vector is 
-then fed into another network, the *transformer network*, along
-with the content image, to produce the final stylized image.
+图像任意风格迁移算法突破了这个限制，通过利用一个特定的*画风网络*，因为它学会了将*任意*图像表示为100维向量来代表其画风。该画风向量跟照片内容一起注入*迁移网络*，来产生最终的风格化图像。
 
 ### 我的数据安全吗？你能看到我的图片吗？
 
