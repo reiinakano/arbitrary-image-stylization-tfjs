@@ -20,7 +20,7 @@ Demo地址：https://reiinakano.github.io/arbitrary-image-stylization-tfjs
 
 虽然也有其他[浏览器端图像风格迁移实现](https://github.com/reiinakano/fast-style-transfer-deeplearnjs)，但它们往往局限于少数预置画风，因为每种画风都需要提前训练一个与之对应的[神经网络](https://zh.wikipedia.org/wiki/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)模型。
 
-图像任意风格迁移算法突破了这个限制，通过利用一个特定的*画风网络*，因为它学会了将*任意*图像表示为100维向量来代表其画风。该画风向量跟照片内容一起注入*迁移网络*，来产生最终的风格化图像。
+本项目通过一个将*任意*画风表示为100维向量的*画风网络*突破了这个限制，该向量跟照片内容一起注入*迁移网络*，来产生最终的风格化图像。
 
 ### 我的数据安全吗？你能看到我的图片吗？
 
