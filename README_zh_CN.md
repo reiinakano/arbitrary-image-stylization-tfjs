@@ -20,7 +20,7 @@ Demo地址：https://reiinakano.github.io/arbitrary-image-stylization-tfjs
 
 虽然也有其他[浏览器端图像风格迁移实现](https://github.com/reiinakano/fast-style-transfer-deeplearnjs)，但它们往往局限于少数预置画风，因为每种画风都需要提前训练一个与之对应的[神经网络](https://zh.wikipedia.org/wiki/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)模型。
 
-本项目通过一个将*任意*画风表示为100维向量的*画风网络*突破了这个限制，该向量跟照片内容一起注入*迁移网络*，来产生最终的风格化图像。
+本项目通过一个将*任意*画风表示为100维向量的*画风网络*来突破这个限制，该向量跟照片内容一起注入*迁移网络*，来产生最终的风格化图像。
 
 ### 我的数据安全吗？你能看到我的图片吗？
 
@@ -29,6 +29,7 @@ this is one of the main advantages of running neural networks
 in your browser. Instead of sending us your data, we send *you* 
 both the model *and* the code to run the model. These are then 
 run by your browser.
+您的数据和照片从来没有离开您的电脑！事实上，这是在您的浏览器中运行神经网络的主要优点之一。不是将您的数据发送给我们，而是我们将模型和运行模型的代码发送给您的浏览器，并由它来执行。
 
 ### 这些模型的区别是什么？
 
