@@ -24,11 +24,6 @@ Demo地址：https://reiinakano.github.io/arbitrary-image-stylization-tfjs
 
 ### 我的数据安全吗？你能看到我的图片吗？
 
-Your data and pictures here never leave your computer! In fact,
-this is one of the main advantages of running neural networks 
-in your browser. Instead of sending us your data, we send *you* 
-both the model *and* the code to run the model. These are then 
-run by your browser.
 您的数据和照片从来没有离开您的电脑！事实上，这是在您的浏览器中运行神经网络的主要优点之一。不是将您的数据发送给我们，而是我们将模型和运行模型的代码发送给您的浏览器，并由它来执行。
 
 ### 这些模型的区别是什么？
