@@ -26,7 +26,7 @@ Demo地址：https://reiinakano.github.io/arbitrary-image-stylization-tfjs
 
 您的数据和照片从来没有离开您的电脑！事实上，这是在您的浏览器中运行神经网络的主要优点之一。不是将您的数据发送给我们，而是我们将模型和运行模型的代码发送给您的浏览器，并由它来执行。
 
-### 这些模型的区别是什么？
+### 这些模型有什么区别？
 
 The original paper uses an Inception-v3 model 
 as the style network, which takes up ~36.3MB 
@@ -58,7 +58,7 @@ transformer network is ~2.4MB, for a total of ~12MB.
 Since these models work for any style, you only 
 have to download them once!
 
-### 风格杂糅是怎么实现的？
+### 画风组合是怎么实现的？
 
 Since each style can be mapped to a 100-dimensional 
 style vector by the style network,
