@@ -1,4 +1,4 @@
-# 基于TensorFlow.js的图像任意风格迁移
+# 基于TensorFlow.js的画风迁移
 
 该项目是一个基于[TensorFlow.js](https://js.tensorflow.org/)的浏览器端图像任意风格迁移实现。
 
@@ -16,77 +16,55 @@ Demo地址：https://reiinakano.github.io/arbitrary-image-stylization-tfjs
 
 ### 概述
 
-这是一个基于TensorFlow.js的浏览器端图像任意风格迁移算法实现。跟所有基于神经网络的图像风格迁移算法一样，[神经网络](https://zh.wikipedia.org/wiki/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)试图去“画”一张画，画的内容源自一张图（通常是一张照片），画的风格源自另一张图（通常是一幅画）。
+这是一个基于TensorFlow.js的浏览器端画风迁移算法实现。跟所有基于神经网络的画风迁移算法一样，[神经网络](https://zh.wikipedia.org/wiki/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)试图去“画”一张画，画的内容源自一张图（通常是一张照片），画的风格源自另一张图（通常是一幅画）。
 
-虽然也有其他[浏览器端图像风格迁移实现](https://github.com/reiinakano/fast-style-transfer-deeplearnjs)，但它们往往局限于少数预置画风，因为每种画风都需要提前训练一个与之对应的[神经网络](https://zh.wikipedia.org/wiki/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)模型。
+虽然也有其他[浏览器端画风迁移实现](https://github.com/reiinakano/fast-style-transfer-deeplearnjs)，但它们往往受限于少量预置画风，因为每种画风都需要提前训练一个与之对应的[神经网络](https://zh.wikipedia.org/wiki/%E4%BA%BA%E5%B7%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)模型。
 
-本项目通过一个将*任意*画风表示为100维向量的*画风网络*来突破这个限制，该向量跟照片内容一起注入*迁移网络*，来产生最终的风格化图像。
+本项目通过一个将*任意*画风表示为100维向量的*画风网络*来突破这个限制，该向量跟照片内容一起注入*迁移网络*，来产生最终的画风图像。
 
 ### 我的数据安全吗？你能看到我的图片吗？
 
-您的数据和照片从来没有离开您的电脑！事实上，这是在您的浏览器中运行神经网络的主要优点之一。不是将您的数据发送给我们，而是我们将模型和运行模型的代码发送给您的浏览器，并由它来执行。
+您的数据和照片未离开您的电脑！事实上，这是在浏览器端运行神经网络的主要优点之一。不是将您的数据发送给我们，而是我们将模型和运行模型的代码发送给您的浏览器，并由它来执行。
 
-### 这些模型有什么区别？
+### 跟别的模型有什么区别？
 
-The original paper uses an Inception-v3 model 
-as the style network, which takes up ~36.3MB 
-when ported to the browser as a FrozenModel.
+原论文采用Inception-v3模型作为画风网络，该模型固化并发送至浏览器体积达36.3MB。
 
-In order to make this model smaller, a MobileNet-v2 was
-used to distill the knowledge from the pretrained Inception-v3 
-style network. This resulted in a size reduction of just under 4x,
-from ~36.3MB to ~9.6MB, at the expense of some quality.
+为减小模型体积，我们将训练好的Inception-v3模型浓缩为MobileNet-v2模型，在模型质量略有牺牲的情况下，模型体积从36.3MB降到了9.6MB，减小了近四倍。
 
-For the transformer network, the original paper uses 
-a model using plain convolution layers. When ported to
-the browser, this model takes up 7.9MB and is responsible
-for the majority of the calculations during stylization.
+对于迁移网络，原论文采用一个使用普通卷积层的模型。该模型发送至浏览器时体积为7.9MB，且画风渲染运算中占很大比重。
 
-In order to make the transformer model more efficient, most of the
-plain convolution layers were replaced with depthwise separable 
-convolutions. This reduced the model size to 2.4MB, while
-drastically improving the speed of stylization.
+为使迁移网络更高效，绝大多数的普通卷积层被深度可分离卷积层代替。这使模型体积降至2.4MB，同时大幅提升了画风渲染速度。
 
-This demo lets you use any combination of the models, defaulting
-to the MobileNet-v2 style network and the separable convolution
-transformer network.
+该demo使您可以利用组合模型，默认使用的是MobileNet-v2画风网络和可分离卷积迁移网络。
 
-### 我下载的模型有多大？
+### 下载的模型有多大？
 
-The distilled style network is ~9.6MB, while the separable convolution
-transformer network is ~2.4MB, for a total of ~12MB. 
-Since these models work for any style, you only 
-have to download them once!
+压缩后的画风网络模型是9.6MB，可分离卷积迁移网络是2.4MB，总共是12MB。您只需要下载这些模型一次，即可用于任意画风渲染。
 
 ### 画风组合是怎么实现的？
 
-Since each style can be mapped to a 100-dimensional 
-style vector by the style network,
-we simply take a weighted average of the two to get
-a new style vector for the transformer network.
+由于每种画风可通过画风网络转化为一个100维的画风向量，我们简单将两个画风向量加权平均，即可得到一个新的画风向量供迁移网络使用。
 
-This is also how we are able to control the strength
-of stylization. We take a weighted average of the style 
-vectors of *both* content and style images and use 
-it as input to the transformer network.
+这也是我们能够控制画风渲染强度的原因，我们分别求画风图像向量和内容图像向量的加权平均值，并把结果作为迁移网络的输入。
 
 ## 本地开发调试
 
-This project uses [Yarn](https://yarnpkg.com/en/) for dependencies.
+本项目采用[Yarn](https://yarnpkg.com/en/)为依赖管理工具
 
-To run it locally, you must install Yarn and run the following command at the repository's root to get all the dependencies.
+本地运行，您需要先安装Yarn，并在项目的根目录运行下面的命令来获得所有依赖包。
 
 ```bash
 yarn run prep
 ```
 
-Then, you can run
+然后，接着运行
 
 ```bash
 yarn run start
 ```
 
-You can then browse to `localhost:9966` to view the application.
+在浏览器键入`localhost:9966`来访问本应用。
 
 
 ## 鸣谢
