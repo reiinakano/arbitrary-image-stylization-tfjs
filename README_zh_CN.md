@@ -68,7 +68,6 @@ yarn run start
 
 ## 鸣谢
 
-This demo could not have been done without the following:
 本demo的完成离不开他们：
 
 * [arbitrary style transfer](https://arxiv.org/abs/1705.06830)论文的作者
@@ -78,5 +77,4 @@ This demo could not have been done without the following:
 * [TensorFlow.js library](https://js.tensorflow.org)
 * [Google Colaboratory](https://colab.research.google.com/)，有了它我才得使用免费GPU以做完所有必要的模型训练!
 
-最后，我非常乐于结识有志于创造一套针对图片的，类似[Magenta Studio](https://magenta.tensorflow.org/studio)的艺术化渲染工具的同仁。如果你有想法或正在实施你的想法，一定要联系我哦！
-
+最后，我非常乐于结识有志于创造一套针对图片的，类似[Magenta Studio](https://magenta.tensorflow.org/studio)的艺术化渲染工具的同仁。如果您有想法或正在实施你的想法，一定要联系我哦！
