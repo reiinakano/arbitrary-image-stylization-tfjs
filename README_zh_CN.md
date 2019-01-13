@@ -24,7 +24,7 @@ Demo地址：https://reiinakano.github.io/arbitrary-image-stylization-tfjs
 
 ### 我的数据安全吗？你能看到我的图片吗？
 
-您的数据和照片未离开您的电脑！事实上，这是在浏览器端运行神经网络的主要优点之一。不是将您的数据发送给我们，而是我们将模型和运行模型的代码发送给您的浏览器，并由它来执行。
+您的数据和照片从未离开您的电脑！事实上，这是在浏览器端运行神经网络的主要优点之一。不是将您的数据发送给我们，而是我们将模型和运行模型的代码发送给您的浏览器，并由它来执行。
 
 ### 跟别的模型有什么区别？
 
@@ -66,21 +66,17 @@ yarn run start
 
 在浏览器键入`localhost:9966`来访问本应用。
 
-
 ## 鸣谢
 
 This demo could not have been done without the following:
+本demo的完成离不开他们：
 
-* Authors of the [arbitrary style transfer](https://arxiv.org/abs/1705.06830) paper.
-* The Magenta repository for [arbitrary style transfer](https://github.com/tensorflow/magenta/tree/master/magenta/models/arbitrary_image_stylization).
-* Authors of [the MobileNet-v2 paper](https://arxiv.org/abs/1801.04381).
-* Authors of the paper describing [neural network knowledge distillation](https://arxiv.org/abs/1503.02531).
-* The [TensorFlow.js library](https://js.tensorflow.org).
-* [Google Colaboratory](https://colab.research.google.com/), with which I was able 
-to do all necessary training using a free(!) GPU.
+* [arbitrary style transfer](https://arxiv.org/abs/1705.06830)论文的作者
+* [arbitrary style transfer](https://github.com/tensorflow/magenta/tree/master/magenta/models/arbitrary_image_stylization)的代码库magenta
+* [the MobileNet-v2 paper](https://arxiv.org/abs/1801.04381)的作者
+* 介绍[neural network knowledge distillation](https://arxiv.org/abs/1503.02531)的论文作者
+* [TensorFlow.js library](https://js.tensorflow.org)
+* [Google Colaboratory](https://colab.research.google.com/)，有了它我才得使用免费GPU以做完所有必要的模型训练!
 
-As a final note, I'd love to hear from people interested 
-in making a suite of tools for artistically manipulating images, kind of like 
-[Magenta Studio](https://magenta.tensorflow.org/studio)
-but for images. Please reach out if you're planning to build/are 
-building one out!
+最后，我非常乐于结识有志于创造一套针对图片的，类似[Magenta Studio](https://magenta.tensorflow.org/studio)的艺术化渲染工具的同仁。如果你有想法或正在实施你的想法，一定要联系我哦！
+
