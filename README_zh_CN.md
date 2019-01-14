@@ -1,6 +1,6 @@
 # 基于TensorFlow.js的画风迁移
 
-该项目是一个基于[TensorFlow.js](https://js.tensorflow.org/)的浏览器端图像任意风格迁移实现。
+该项目是一个纯览器端的基于[TensorFlow.js](https://js.tensorflow.org/)的画风迁移实现。
 
 Demo地址：https://reiinakano.github.io/arbitrary-image-stylization-tfjs
 
