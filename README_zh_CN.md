@@ -1,6 +1,6 @@
 # 基于TensorFlow.js的画风迁移
 
-本项目是纯览器端的基于[TensorFlow.js](https://js.tensorflow.org/)的画风迁移算法实现。
+本项目是基于[TensorFlow.js](https://js.tensorflow.org/)的纯览器端画风迁移算法实现。
 
 Demo地址：https://reiinakano.github.io/arbitrary-image-stylization-tfjs
 
