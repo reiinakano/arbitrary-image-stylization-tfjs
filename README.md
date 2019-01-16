@@ -4,6 +4,7 @@ This repository contains an implementation of arbitrary style transfer running f
 inside the browser using TensorFlow.js.
 
 Demo website: https://reiinakano.github.io/arbitrary-image-stylization-tfjs
+Blog post with more details: https://magenta.tensorflow.org/blog/2018/12/20/style-transfer-js/
 
 ### Stylize an image
 
@@ -34,6 +35,9 @@ separate *style network* that learns to break down *any* image into
 a 100-dimensional vector representing its style. This style vector is 
 then fed into another network, the *transformer network*, along
 with the content image, to produce the final stylized image.
+
+I have written a [blog post](https://magenta.tensorflow.org/blog/2018/12/20/style-transfer-js/) 
+explaining this project in more detail.
 
 ### Is my data safe? Can you see my pictures?
 
