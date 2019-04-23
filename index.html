@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<!--
+Copyright 2018 Reiichiro Nakano All Rights Reserved.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+==============================================================================
+-->
+<html lang="en">
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-91864013-5"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-91864013-5');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@ReiiYoda" />
+    <meta name="twitter:title" content="Arbitrary Style Transfer with TF.js" />
+    <meta name="twitter:description" content="Paint yourself in the style of any painting, right in the browser." />
+    <meta name="twitter:image" content="https://raw.githubusercontent.com/reiinakano/arbitrary-image-stylization-tfjs/master/readme_img/stylize.jpg" />
+
+    <title>Arbitrary Style Transfer in the Browser</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+<script src="dist/bundle.js"></script>
+</head>
+
+<style>
+.centered {
+  margin: auto;    
+  display: block;
+}
+</style>
+
+<body>
+<a href="https://github.com/reiinakano/arbitrary-image-stylization-tfjs" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<input type="file" id="file-select" style="display: none" accept="image/x-png,image/gif,image/jpeg"/>
+<!-- As a heading -->
+<div class="jumbotron jumbotron-fluid py-4" style="text-align: center; background-color: #f5f5f5;">
+    <div class="container">
+      <h4>Arbitrary Style Transfer in the Browser</h1>
+    </div>
+  </div>
+<div class="">
+<div id="mobile-warning" hidden class="alert alert-warning" role="alert">
+  This site may have problems functioning on mobile devices. 
+  Don't worry, you can still read the description below!
+</div>
+<ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="stylize-tab" data-toggle="tab" href="#stylize" role="tab" aria-controls="stylize" aria-selected="true">Stylize an image</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="combine-tab" data-toggle="tab" href="#combine" role="tab" aria-controls="combine" aria-selected="false">Combine two styles</a>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="stylize" role="tabpanel" aria-labelledby="stylize-tab">
+      <div class="container">
+        <div class="row my-4">
+          <div class="col mx-5 my-4">
+              <img id="content-img" class="centered" src="images/chicago.jpg" height=256></img>
+              <br>
+              <label for="content-img-size">Content image size</label>
+              <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" 
+              title="A bigger content image results in a more detailed output, but increases the processing time significantly."></i>
+              <input type="range" min="256" max="400" value="256" class="custom-range centered" id="content-img-size" >
+              <br>
+              <select id="content-select" class="centered custom-select">
+                <option value="" disabled>Select content</option>
+                <option value="pic">Take a picture</option>
+                <option value="file">Select from file</option>
+                <option value="stata">stata</option>
+                <option value="diana">diana</option>
+                <option value="golden_gate">golden_gate</option>
+                <option value="beach">beach</option>
+                <option value="chicago" selected="selected">chicago</option>
+                <option value="statue_of_liberty">statue_of_liberty</option>
+              </select>
+          </div>
+          <div class="col mx-5 my-4">
+              <img id="style-img" class="centered" crossorigin="anonymous" src="images/seaport.jpg" height=256></img>
+              <br>
+              <label for="style-img-size">Style image size</label>
+              <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" 
+              title='Changing the size of a style image usually affects the texture "seen" by the network.'></i>
+              <input id="style-img-square" type="checkbox" style="vertical-align: middle; float: right;"
+              data-toggle="tooltip" data-placement="top" 
+              title="Force image to square">
+              <input type="range" min="100" max="400" value="256" class="custom-range centered" id="style-img-size">
+              <br>
+              <select id="style-select" class="centered custom-select">
+                <option value="" disabled>Select a style</option>
+                <option value="file">Select from file</option>
+                <option value="random">Random image from wikiart.org</option>
+                <option value="udnie">udnie</option>
+                <option value="stripes">stripes</option>
+                <option value="bricks">bricks</option>
+                <option value="clouds">clouds</option>
+                <option value="towers">towers</option>
+                <option value="sketch">sketch</option>
+                <option value="seaport" selected="selected">seaport</option>
+                <option value="red_circles">red_circles</option>
+                <option value="zigzag">zigzag</option>
+              </select>
+          </div>
+        </div>
+        <div class="row my-4">
+          <div class="col-md-6 offset-md-3">
+            <canvas id="stylized" class="centered"></canvas>
+            <br>
+            <label for="stylized-img-ratio">Stylization strength</label>
+            <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" 
+            title="This parameter affects the stylization strength. The further to the right, the stronger the stylization. This is done via interpolation between the style vectors of the content and style images."></i>
+            <input type="range" min="0" max="100" value="100" class="custom-range centered" id="stylized-img-ratio">
+          </div>
+        </div>
+        <div class="row my-4">
+          <div class="col-md-5 offset-md-3">
+              <button disabled id="style-button" type="button" class="btn btn-primary btn-block">Loading stylization model. Please wait..</button>
+          </div>
+          <div class="col-md-1">
+              <button type="button" id="randomize" class="btn btn-light btn-block">
+                <i class="fas fa-random" data-toggle="tooltip" data-placement="top" 
+                title="Randomize parameters"></i>
+              </button>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div class="tab-pane fade" id="combine" role="tabpanel" aria-labelledby="combine-tab">
+    <div class="container">
+      <div class="row my-4">
+        <div class="col mx-5 my-4">
+            <img id="c-style-img-1" class="centered" crossorigin="anonymous" src="images/stripes.jpg" height=256></img>
+            <br>
+            <label for="c-style-img-1-size">Style A Size</label>
+            <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" 
+            title="Changing the size of a style image usually affects the texture "seen" by the network."></i>
+            <input id="c-style-1-square" type="checkbox" style="vertical-align: middle; float: right;"
+            data-toggle="tooltip" data-placement="top" 
+            title="Force image to square">
+            <input type="range" min="100" max="400" value="256" class="custom-range centered" id="c-style-img-1-size">
+            <br>
+            <select id="c-style-1-select" class="centered custom-select">
+              <option value="" disabled>Select a style</option>
+              <option value="file">Select from file</option>
+              <option value="random">Random image from wikiart.org</option>
+              <option value="udnie">udnie</option>
+              <option value="stripes" selected="selected">stripes</option>
+              <option value="bricks">bricks</option>
+              <option value="clouds">clouds</option>
+              <option value="towers">towers</option>
+              <option value="sketch">sketch</option>
+              <option value="seaport">seaport</option>
+              <option value="red_circles">red_circles</option>
+              <option value="zigzag">zigzag</option>
+            </select>
+        </div>
+        <div class="col mx-5 my-4">
+            <img id="c-style-img-2" class="centered" crossorigin="anonymous" src="images/bricks.jpg" height=256></img>
+            <br>
+            <label for="c-style-img-2-size">Style B Size</label>
+            <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" 
+            title="Changing the size of a style image usually affects the texture "seen" by the network."></i>
+            <input id="c-style-2-square" type="checkbox" style="vertical-align: middle; float: right;"
+            data-toggle="tooltip" data-placement="top" 
+            title="Force image to square">
+            <input type="range" min="100" max="400" value="256" class="custom-range centered" id="c-style-img-2-size">
+            <br>
+            <select id="c-style-2-select" class="centered custom-select">
+              <option value="" disabled>Select a style</option>
+              <option value="file">Select from file</option>
+              <option value="random">Random image from wikiart.org</option>
+              <option value="udnie">udnie</option>
+              <option value="stripes">stripes</option>
+              <option value="bricks" selected="selected">bricks</option>
+              <option value="clouds">clouds</option>
+              <option value="towers">towers</option>
+              <option value="sketch">sketch</option>
+              <option value="seaport">seaport</option>
+              <option value="red_circles">red_circles</option>
+              <option value="zigzag">zigzag</option>
+            </select>
+        </div>
+      </div>
+      <div class="row my-4">
+        <div class="col-md-6 offset-md-3">
+            <img id="c-content-img" class="centered" src="images/statue_of_liberty.jpg" height=256></img>
+            <br>
+            <label for="c-content-img-size">Content image size</label>
+            <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" 
+            title="A bigger content image results in a more detailed output, but increases the processing time significantly."></i>
+            <input type="range" min="256" max="400" value="256" class="custom-range centered" id="c-content-img-size">
+            <br>
+            <select id="c-content-select" class="centered custom-select">
+              <option value="" disabled>Select content</option>
+              <option value="pic">Take a picture</option>
+              <option value="file">Select from file</option>
+              <option value="stata">stata</option>
+              <option value="diana">diana</option>
+              <option value="golden_gate">golden_gate</option>
+              <option value="beach">beach</option>
+              <option value="chicago">chicago</option>
+              <option value="statue_of_liberty" selected="selected">statue_of_liberty</option>
+            </select>
+        </div>
+      </div>
+      <div class="row my-4">
+        <div class="col-md-6 offset-md-3">
+            <canvas id="c-stylized" class="centered"></canvas>
+            <br>
+            <label for="c-stylized-img-ratio">Stylization Ratio</label>
+            <i class="far fa-question-circle" data-toggle="tooltip" data-placement="top" 
+            title="This parameter affects the strength of the two styles relative to each other. This is done via interpolation between the style vectors of the two style images."></i>
+            <input type="range" min="0" max="100" value="50" class="custom-range centered" id="c-stylized-img-ratio">
+        </div>
+      </div>
+      <div class="row my-4">
+        <div class="col-md-5 offset-md-3">
+            <button disabled id="combine-button" type="button" class="btn btn-primary btn-block">Loading stylization model. Please wait..</button>
+        </div>
+        <div class="col-md-1">
+            <button type="button" id="c-randomize" class="btn btn-light btn-block">
+              <i class="fas fa-random" data-toggle="tooltip" data-placement="top" 
+              title="Randomize parameters"></i>
+            </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row my-4">
+    <div class="col-md-3 offset-md-3">
+        <select disabled id="model-select-style" class="centered custom-select">
+          <option value="mobilenet" selected="selected">[Fast] Distilled MobileNet style model (9.6MB)</option>
+          <option value="inception">[High quality] Original Inceptionv3 style model (36.3MB)</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <select disabled id="model-select-transformer" class="centered custom-select">
+          <option value="separable" selected="selected">[Fast] Separable_conv2d transformer (2.4MB)</option>
+          <option value="original">[High quality] Original transformer model (7.9MB)</option>
+        </select>
+    </div>
+  </div>
+</div>
+
+<canvas id="hidden-canvas" style="display: none"></canvas>
+<div class="modal fade" id="cam-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Take a snapshot!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <video id="webcam-video" class="centered" width="500" height="375"></video>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="snap-button">Snap!</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid pt-5" style="background-color: #f5f5f5;">
+  <div class="row">
+    <div class="col-md-4 offset-md-4">
+      <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Paint a photograph in the style of anything, right in your browser! Try out arbitrary style transfer! #CreativeAI #creativecoding #generative" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </div>
+  </div>
+  <div class="row pt-5">
+    <div class="col-md-4 offset-md-4">
+        <h5>
+          What is this?
+        </h5>
+        <p>
+          This is an implementation of an arbitrary style transfer algorithm
+          running purely in the browser using TensorFlow.js. As with all neural 
+          style transfer algorithms, a neural network attempts to "draw" one 
+          picture, the Content (usually a photograph), in the style of another, 
+          the Style (usually a painting). 
+        </p>
+        <p>
+          Although <a href="https://github.com/reiinakano/fast-style-transfer-deeplearnjs">other browser implementations</a> of style transfer exist,
+          they are normally limited to a pre-selected handful of styles, due to
+          the requirement that a separate neural network must be trained for each
+          style image.
+        </p>
+        <p>
+          Arbitrary style transfer works around this limitation by using a
+          separate <i>style network</i> that learns to break down <i>any</i> image into 
+          a 100-dimensional vector representing its style. This style vector is 
+          then fed into another network, the <i>transformer network</i>, along
+          with the content image, to produce the final stylized image.
+        </p>
+        <p>
+          I have written a <a href="https://magenta.tensorflow.org/blog/2018/12/20/style-transfer-js/">blog post</a> 
+          explaining this project in more detail.
+        </p>
+    </div>
+  </div>
+  <div class="row pt-5">
+    <div class="col-md-4 offset-md-4">
+        <h5>
+          Is my data safe? Can you see my pictures?
+        </h5>
+        <p>
+          Your data and pictures here never leave your computer! In fact,
+          this is one of the main advantages of running neural networks 
+          in your browser. Instead of sending us your data, we send *you* 
+          both the model *and* the code to run the model. These are then 
+          run by your browser.
+        </p>
+    </div>
+  </div>
+  <div class="row pt-5">
+    <div class="col-md-4 offset-md-4">
+        <h5>
+          What are all these different models?
+        </h5>
+        <p>
+          The original paper uses an Inception-v3 model 
+          as the style network, which takes up ~36.3MB 
+          when ported to the browser as a FrozenModel.
+        </p>
+        <p>
+          In order to make this model smaller, a MobileNet-v2 was
+          used to distill the knowledge from the pretrained Inception-v3 
+          style network. This resulted in a size reduction of just under 4x,
+          from ~36.3MB to ~9.6MB, at the expense of some quality.
+        </p>
+        <p>
+          For the transformer network, the original paper uses 
+          a model using plain convolution layers. When ported to
+          the browser, this model takes up 7.9MB and is responsible
+          for the majority of the calculations during stylization.
+        </p>
+        <p>
+          In order to make the transformer model more efficient, most of the
+          plain convolution layers were replaced with depthwise separable 
+          convolutions. This reduced the model size to 2.4MB, while
+          drastically improving the speed of stylization.
+        </p>
+        <p>
+          This demo lets you use any combination of the models, defaulting
+          to the MobileNet-v2 style network and the separable convolution
+          transformer network.
+        </p>
+    </div>
+  </div>
+  <div class="row pt-5">
+    <div class="col-md-4 offset-md-4">
+        <h5>
+          How big are the models I'm downloading?
+        </h5>
+        <p>
+          The distilled style network is ~9.6MB, while the separable convolution
+          transformer network is ~2.4MB,
+          for a total of ~12MB. Since these models work for any style, you only 
+          have to download them once!
+        </p>
+    </div>
+  </div>
+  <div class="row pt-5">
+    <div class="col-md-4 offset-md-4">
+        <h5>
+          How does style combination work?
+        </h5>
+        <p>
+          Since each style can be mapped to a 100-dimensional 
+          style vector by the style network,
+          we simply take a weighted average of the two to get
+          a new style vector for the transformer network.
+        </p>
+        <p>
+          This is also how we are able to control the strength
+          of stylization. We take a weighted average of the style 
+          vectors of <i>both</i> content and style images and use 
+          it as input to the transformer network.
+        </p>
+    </div>
+  </div>
+  <div class="row pt-5">
+    <div class="col-md-4 offset-md-4">
+        <h5>
+          Is the code open source?
+        </h5>
+        <p>
+            Yup! The code is <a href="https://github.com/reiinakano/arbitrary-image-stylization-tfjs">hosted on Github</a>.
+        </p>
+    </div>
+  </div>
+  <div class="row pt-5">
+    <div class="col-md-4 offset-md-4">
+        <h5>
+          Credits
+        </h5>
+        <p>
+          This demo was put together by <a href="https://github.com/reiinakano">Reiichiro Nakano</a>
+          but could not have been done without the following:
+        </p>
+        <ul>
+          <li>
+            Authors of the
+            <a href="https://arxiv.org/abs/1705.06830">arbitrary style transfer</a> paper.
+          </li>
+          <li>
+            The Magenta repository for <a href="https://github.com/tensorflow/magenta/tree/master/magenta/models/arbitrary_image_stylization">arbitrary style transfer</a>.
+          </li>
+          <li>
+            Authors of <a href="https://arxiv.org/abs/1801.04381">the MobileNet-v2 paper</a>.
+          </li>
+          <li>
+            Authors of the paper describing <a href="https://arxiv.org/abs/1503.02531">neural network knowledge distillation</a>.
+          </li>
+          <li>
+            The <a href="https://js.tensorflow.org">TensorFlow.js library</a>.
+          </li>
+          <li>
+            <a href="https://colab.research.google.com/">Google Colaboratory</a>, 
+            with which I was able to do all necessary training using a free(!) GPU.
+          </li>
+        </ul>
+        <p>
+            As a final note, I'd love to hear from people interested 
+            in making a suite of tools for artistically manipulating images, kind of like 
+            <a href="https://magenta.tensorflow.org/studio">Magenta Studio</a>
+            but for images. Please reach out if you're planning to build/are 
+            building one out!
+        </p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- JQuery -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+</body>
+</html>
