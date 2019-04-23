@@ -17,6 +17,7 @@
 
 import 'babel-polyfill';
 import * as tf from '@tensorflow/tfjs';
+tf.ENV.set('WEBGL_PACK', false);  // This needs to be done otherwise things run very slow v1.0.4
 import links from './links';
 
 /**
@@ -78,9 +79,8 @@ class Main {
 
   async loadMobileNetStyleModel() {
     if (!this.mobileStyleNet) {
-      this.mobileStyleNet = await tf.loadFrozenModel(
-        'saved_model_style_js/tensorflowjs_model.pb', 
-        'saved_model_style_js/weights_manifest.json');
+      this.mobileStyleNet = await tf.loadGraphModel(
+        'saved_model_style_js/model.json');
     }
 
     return this.mobileStyleNet;
@@ -88,9 +88,8 @@ class Main {
 
   async loadInceptionStyleModel() {
     if (!this.inceptionStyleNet) {
-      this.inceptionStyleNet = await tf.loadFrozenModel(
-        'saved_model_style_inception_js/tensorflowjs_model.pb',
-        'saved_model_style_inception_js/weights_manifest.json');
+      this.inceptionStyleNet = await tf.loadGraphModel(
+        'saved_model_style_inception_js/model.json');
     }
     
     return this.inceptionStyleNet;
@@ -98,9 +97,8 @@ class Main {
 
   async loadOriginalTransformerModel() {
     if (!this.originalTransformNet) {
-      this.originalTransformNet = await tf.loadFrozenModel(
-        'saved_model_transformer_js/tensorflowjs_model.pb',
-        'saved_model_transformer_js/weights_manifest.json'
+      this.originalTransformNet = await tf.loadGraphModel(
+        'saved_model_transformer_js/model.json'
       );
     }
 
@@ -109,9 +107,8 @@ class Main {
 
   async loadSeparableTransformerModel() {
     if (!this.separableTransformNet) {
-      this.separableTransformNet = await tf.loadFrozenModel(
-        'saved_model_transformer_separable_js/tensorflowjs_model.pb',
-        'saved_model_transformer_separable_js/weights_manifest.json'
+      this.separableTransformNet = await tf.loadGraphModel(
+        'saved_model_transformer_separable_js/model.json'
       );
     }
 
@@ -354,13 +351,13 @@ class Main {
     this.styleButton.textContent = 'Generating 100D style representation';
     await tf.nextFrame();
     let bottleneck = await tf.tidy(() => {
-      return this.styleNet.predict(tf.fromPixels(this.styleImg).toFloat().div(tf.scalar(255)).expandDims());
+      return this.styleNet.predict(tf.browser.fromPixels(this.styleImg).toFloat().div(tf.scalar(255)).expandDims());
     })
     if (this.styleRatio !== 1.0) {
       this.styleButton.textContent = 'Generating 100D identity style representation';
       await tf.nextFrame();
       const identityBottleneck = await tf.tidy(() => {
-        return this.styleNet.predict(tf.fromPixels(this.contentImg).toFloat().div(tf.scalar(255)).expandDims());
+        return this.styleNet.predict(tf.browser.fromPixels(this.contentImg).toFloat().div(tf.scalar(255)).expandDims());
       })
       const styleBottleneck = bottleneck;
       bottleneck = await tf.tidy(() => {
@@ -374,9 +371,9 @@ class Main {
     this.styleButton.textContent = 'Stylizing image...';
     await tf.nextFrame();
     const stylized = await tf.tidy(() => {
-      return this.transformNet.predict([tf.fromPixels(this.contentImg).toFloat().div(tf.scalar(255)).expandDims(), bottleneck]).squeeze();
+      return this.transformNet.predict([tf.browser.fromPixels(this.contentImg).toFloat().div(tf.scalar(255)).expandDims(), bottleneck]).squeeze();
     })
-    await tf.toPixels(stylized, this.stylized);
+    await tf.browser.toPixels(stylized, this.stylized);
     bottleneck.dispose();  // Might wanna keep this around
     stylized.dispose();
   }
@@ -386,13 +383,13 @@ class Main {
     this.combineButton.textContent = 'Generating 100D style representation of image 1';
     await tf.nextFrame();
     const bottleneck1 = await tf.tidy(() => {
-      return this.styleNet.predict(tf.fromPixels(this.combStyleImg1).toFloat().div(tf.scalar(255)).expandDims());
+      return this.styleNet.predict(tf.browser.fromPixels(this.combStyleImg1).toFloat().div(tf.scalar(255)).expandDims());
     })
     
     this.combineButton.textContent = 'Generating 100D style representation of image 2';
     await tf.nextFrame();
     const bottleneck2 = await tf.tidy(() => {
-      return this.styleNet.predict(tf.fromPixels(this.combStyleImg2).toFloat().div(tf.scalar(255)).expandDims());
+      return this.styleNet.predict(tf.browser.fromPixels(this.combStyleImg2).toFloat().div(tf.scalar(255)).expandDims());
     });
 
     this.combineButton.textContent = 'Stylizing image...';
@@ -404,9 +401,9 @@ class Main {
     });
 
     const stylized = await tf.tidy(() => {
-      return this.transformNet.predict([tf.fromPixels(this.combContentImg).toFloat().div(tf.scalar(255)).expandDims(), combinedBottleneck]).squeeze();
+      return this.transformNet.predict([tf.browser.fromPixels(this.combContentImg).toFloat().div(tf.scalar(255)).expandDims(), combinedBottleneck]).squeeze();
     })
-    await tf.toPixels(stylized, this.combStylized);
+    await tf.browser.toPixels(stylized, this.combStylized);
     bottleneck1.dispose();  // Might wanna keep this around
     bottleneck2.dispose();
     combinedBottleneck.dispose();
